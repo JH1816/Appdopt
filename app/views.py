@@ -214,6 +214,33 @@ def latestpost(request,username):
         cursor.execute("SELECT * FROM posts")
         posts = cursor.fetchall()
     
+def profile(request, username):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE username = %s", [username])
+        posts = cursor.fetchall()
+
+    result_dict = {'currentuser': username}
+    result_dict['records'] = posts
+    status = ''
+    
+
+    if request.POST:
+        ## Check if username is already in the table
+        with connection.cursor() as cursor:
+            current_action = request.POST['action']
+            cursor.execute("SELECT " + current_action + " FROM users WHERE username = %s ", [username])
+            user = cursor.fetchone() 
+
+            if user != None and user[0] == request.POST['old_'+ current_action] and request.POST['old_'+ current_action] != request.POST['new_'+ current_action]:
+                cursor.execute("UPDATE users SET " + current_action + " = %s WHERE username = %s", [ request.POST['new_'+ current_action], username])
+                status =  current_action + ' has been succesfully updated'
+            else:
+                status = current_action + 'of profile with username %s failed to change %s' % (username, current_action)
+
+
+            result_dict[current_action + '_status'] = status
+    return render(request,'app/profile.html',result_dict)
+ 
 def adminView(request, username):
     """Shows the main page"""
     
