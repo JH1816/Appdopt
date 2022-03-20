@@ -24,10 +24,7 @@ def index(request):
         cursor.execute("SELECT * FROM posts ORDER BY post_id")
         posts = cursor.fetchall()
 
-    result_dict = {'records': users}
-    result_dict2 = {'listing': posts}
-
-    return render(request,'app/index.html',{result_dict, result_dict2})
+    return render(request,'app/index.html',{'records': users, 'listing': posts})
 
 # Create your views here.
 def home(request,username):
