@@ -30,5 +30,5 @@ urlpatterns = [
     path('edit/<str:username>', app.views.edit, name='edit'),
     path('register', app.views.register, name='register'),
     path('index', app.views.index, name = 'index'),
-    path('adminView', app.views.adminView, name = 'adminView'),
+    path('adminView/<str:username>', app.views.adminView, name = 'adminView'),
 ]
