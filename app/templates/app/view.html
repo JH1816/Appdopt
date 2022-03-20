@@ -1,0 +1,26 @@
+{% extends "app/base.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ cust.1 }}</a>
+        <small class="text-muted">{{ cust.4|date:"F d, Y" }}</small>
+        {% if cust.1 == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' cust.0 %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' cust.0 %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="Title">{{ cust.8 }}</h2>
+      <p class="article-content">
+        Pet:{{ cust.2 }}
+        Breed:{{ cust.3 }}
+        Age:{{ cust.5 }}
+        Price:{{ cust.6 }}
+        Gender:{{ cust.6 }}
+        Sex:{{ cust.10 }}
+      </p>
+    </div>
+  </article>
+{% endblock content %}

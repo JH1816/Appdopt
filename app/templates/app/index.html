@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+<body>
+    <h2>Post in Appdopt</h2>
+    <img src="{% static 'app/images/logo.png' %}" width="20%"   alt="Appdopt logo"/><br/>
+    <a href="add">New Post</a>
+    <br/><br/>
+    <table border=1>
+        <thead>
+            <th>post_id</th>
+            <th>title</th>
+            <th>date_of_post</th>
+            
+        </thead>
+        {% for cust in records %}
+        <tr>
+            <td> {{ cust.0 }} </td>
+            <td> {{ cust.8 }} </td>
+            <td> {{ cust.4 }} </td>
+            <td>
+                <a href="view/{{cust.0}}"><button>View</button></a> | 
+                <a href="edit/{{cust.0}}"><button>Edit</button></a>
+                | 
+                <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{cust.5}}"/>
+                <button onclick="return confirm('Are you sure you want to delete {{cust.5}}?');" type="submit" name="action" value="delete">Delete</button> 
+              </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
