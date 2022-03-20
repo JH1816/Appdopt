@@ -27,7 +27,7 @@ def index(request):
     result_dict = {'records': users}
     result_dict2 = {'listing': posts}
 
-    return render(request,'app/index.html',result_dict)
+    return render(request,'app/index.html',{result_dict, result_dict2})
 
 # Create your views here.
 def home(request,username):
