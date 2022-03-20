@@ -191,6 +191,16 @@ def post(request,username):
  
     return render(request, "app/post.html", context)
 
+def mypost(request,username):
+    """Shows the main page"""
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE username = %s ORDER BY post_id",[username])
+        posts = cursor.fetchall()
+
+    result_dict = {'currentuser': username}
+    result_dict['records'] = posts
+    return render(request,'app/mypost.html',result_dict)
+
 
 def latestpost(request,username):
     """Shows the main page"""
