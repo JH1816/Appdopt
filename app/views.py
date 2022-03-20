@@ -207,3 +207,13 @@ def latestpost(request,username):
         cursor.execute("SELECT * FROM posts")
         posts = cursor.fetchall()
     
+def adminView(request, username):
+    """Shows the main page"""
+    
+    ## Use raw query to get a user
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+        users = cursor.fetchone()
+    result_dict = {'user': users}
+
+    return render(request,'app/view.html',result_dict)
