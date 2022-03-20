@@ -86,7 +86,7 @@ def add(request):
     return render(request, "app/add.html", context)
 
 # Create your views here.
-def edit(request, id):
+def edit(request, username):
     """Shows the main page"""
 
     # dictionary for initial data with
@@ -95,7 +95,7 @@ def edit(request, id):
 
     # fetch the object related to passed id
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
         obj = cursor.fetchone()
 
     status = ''
@@ -104,11 +104,11 @@ def edit(request, id):
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE customers SET first_name = %s, last_name = %s, email = %s, dob = %s, since = %s, country = %s WHERE customerid = %s"
+            cursor.execute("UPDATE users SET first_name = %s, last_name = %s, email = %s, phone_number = %s, password = %s WHERE username = %s"
                     , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                        request.POST['dob'] , request.POST['since'], request.POST['country'], id ])
-            status = 'Customer edited successfully!'
-            cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
+                        request.POST['phone_number'] , request.POST['password'], username ])
+            status = 'User edited successfully!'
+            cursor.execute("SELECT * FROM users WHERE username = %s", [username])
             obj = cursor.fetchone()
 
 
