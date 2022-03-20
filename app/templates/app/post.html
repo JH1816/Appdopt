@@ -1,0 +1,25 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Make a post</legend>
+                <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
+                    post_id<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="post_id" maxlength="64" class="textinput textInput" required="" id="id_post_id"> </div> </div> <div id="div_id_post_id" class="control-group"> <label for="id_post_id" class="control-label requiredField">
+                    pet<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="pet" maxlength="64" class="textinput textInput" required="" id="id_pet"> </div> </div> <div id="div_id_pet" class="control-group"> <label for="id_pet" class="control-label requiredField">
+                    breed<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="breed" maxlength="64" class="textinput textInput" required="" id="id_breed"> </div> </div> <div id="div_id_breed" class="control-group"> <label for="id_dob" class="control-label requiredField">
+                    age_of_pet<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="age_of_pet" maxlength="16" class="textinput textInput" required="" id="id_age_of_pet"> </div> </div> <div id="div_id_age_of_pet" class="control-group"> <label for="id_page_of_pet" class="control-label requiredField">
+                    price<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="price" maxlength="16" class="textinput textInput" required="" id="id_price"> </div> </div> <div id="div_id_price" class="control-group"> <label for="id_price" class="control-label requiredField">
+                    description<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="description" maxlength="256" class="textinput textInput" required="" id="id_description"> </div> </div> <div id="div_id_description" class="control-group"> <label for="id_description" class="control-label requiredField"></label>
+                    title<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="title" maxlength="256" class="textinput textInput" required="" id="id_title"> </div> </div> <div id="div_id_title" class="control-group"> <label for="id_title" class="control-label requiredField"></label>
+                    gender<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="gender" maxlength="16" class="textinput textInput" required="" id="id_gender"> </div> </div> <div id="div_id_gender" class="control-group"> <label for="id_gender" class="control-label requiredField"></label>
+                    <br>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="Post">Post</button>
+            </div>
+        </form>
+        <p style="color:red">{{ status }}</p>
+    </div>
+{% endblock content %}
