@@ -14,7 +14,8 @@ def index(request):
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
                 
-        elif request.POST['action'] == 'deletePost':
+    if request.POST:            
+        if request.POST['action'] == 'deletePost':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
 
