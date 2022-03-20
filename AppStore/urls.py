@@ -28,4 +28,5 @@ urlpatterns = [
     path('home/<str:username>/post', app.views.post, name='post'),
     path('edit/<str:id>', app.views.edit, name='edit'),
     path('register', app.views.register, name='register'),
+    path('index', app.views.index, name = 'index'),
 ]

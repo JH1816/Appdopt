@@ -12,14 +12,14 @@ def index(request):
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM customers WHERE customerid = %s", [request.POST['id']])
+                cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM posts ORDER BY post_id")
-        posts = cursor.fetchall()
+        cursor.execute("SELECT * FROM users ORDER BY username")
+        users = cursor.fetchall()
 
-    result_dict = {'records': posts}
+    result_dict = {'records': users}
 
     return render(request,'app/index.html',result_dict)
 
