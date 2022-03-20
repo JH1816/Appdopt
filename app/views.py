@@ -216,4 +216,4 @@ def adminView(request, username):
         users = cursor.fetchone()
     result_dict = {'user': users}
 
-    return render(request,'app/view.html',result_dict)
+    return render(request,'app/adminView.html',result_dict)
