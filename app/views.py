@@ -24,18 +24,18 @@ def index(request):
     return render(request,'app/index.html',result_dict)
 
 # Create your views here.
-def home(request):
+def home(request,username):
     """Shows the main page"""
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts ORDER BY post_id")
         posts = cursor.fetchall()
 
-    result_dict = {'records': posts}
-
+    result_dict = {'currentuser': username}
+    result_dict['records'] = posts
     return render(request,'app/home.html',result_dict)
 
 # Create your views here.
-def view(request, id):
+def view(request, id,username):
     """Shows the main page"""
     
     ## Use raw query to get a customer
@@ -43,6 +43,7 @@ def view(request, id):
         cursor.execute("SELECT * FROM posts WHERE post_id = %s", [id])
         post = cursor.fetchone()
     result_dict = {'cust': post}
+    result_dict['currentuser']=username
 
     return render(request,'app/view.html',result_dict)
 
@@ -66,7 +67,7 @@ def add(request):
                            request.POST['dob'] , request.POST['since'], request.POST['customerid'], request.POST['country'] ])
                 return redirect('index')    
             else:
-                status = 'Customer with ID %s already exists' % (request.POST['customerid'])
+                status = 'User with ID %s already exists' % (request.POST['customerid'])
 
 
     context['status'] = status
@@ -122,7 +123,8 @@ def register(request):
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)"
                         , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
                            request.POST['username'] , request.POST['phonenumber'], request.POST['password']])
-                return redirect('home')    
+                messages.success(request, f'Account successfully created!')
+                return redirect('home',username=request.POST['username'])    
             else:
                 status = 'User with username %s already exists' % (request.POST['username'])
 
@@ -141,10 +143,39 @@ def login(request):
             customer = cursor.fetchone()
             ## No user with that user name or wrong password
             if customer != None:
-                return redirect('home')    
+                return redirect('home',username=request.POST['username'])    
             else:
                 status = 'Wrong password or username'
 
 
     context['status'] = status
     return render(request, 'app/login.html', context)
+
+
+def post(request,username):
+    """Shows the main page"""
+    context = {}
+    status = ''
+
+    if request.POST:
+        ## Check if username is already in the table
+        with connection.cursor() as cursor:
+
+            cursor.execute("SELECT * FROM posts WHERE  post_id= %s ", [request.POST['post_id']])
+            post = cursor.fetchone()
+            ## No post with same id
+            if post == None:
+                cursor.execute("INSERT INTO posts VALUES (%s, %s, %s, %s, now(), %s,%s,%s,%s,'AVAILABLE',%s)"
+                        , [request.POST['post_id'], username,request.POST['pet'], request.POST['breed']
+                        , request.POST['age_of_pet'], request.POST['price'],
+                           request.POST['description'],request.POST['title'],request.POST['gender']])
+                status = 'Post with post_id %s has been succesfully posted' % (request.POST['post_id'])
+            else:
+                status = 'Post with post_id %s  already exists' % (request.POST['post_id'])
+
+
+    context['status'] = status
+    context['currentuser'] = username
+ 
+    return render(request, "app/post.html", context)
+
