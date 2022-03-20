@@ -197,3 +197,4 @@ def latestpost(request,username):
         cursor.execute("SELECT * FROM posts")
         posts = cursor.fetchall()
     
+# testing: jm
