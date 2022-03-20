@@ -251,3 +251,14 @@ def adminView(request, username):
     result_dict = {'user': users}
 
     return render(request,'app/adminView.html',result_dict)
+
+def postView(request, post_id):
+    """Shows the main page"""
+    
+    ## Use raw query to get a post
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
+        posts = cursor.fetchone()
+    result_dict = {'post': posts}
+
+    return render(request,'app/postView.html',result_dict)
