@@ -281,7 +281,7 @@ def postEdit(request, post_id):
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE posts SET pet = %s, breed = %s, date_of_post = %s, age_of_pet = %s, price = %s, description = %s, title = %s, status = %s, gender = %s, WHERE post_id = %s"
+            cursor.execute("UPDATE posts SET pet = %s, breed = %s, date_of_post = %s, age_of_pet = %s, price = %s, description = %s, title = %s, status = %s, gender = %s WHERE post_id = %s"
                     , [request.POST['pet'], request.POST['breed'], request.POST['date_of_post'],
                         request.POST['age_of_pet'] , request.POST['price'], request.POST['description'], request.POST['title'], request.POST['status'], request.POST['gender'], post_id ])
             status = 'Post edited successfully!'
