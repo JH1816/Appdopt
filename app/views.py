@@ -13,15 +13,21 @@ def index(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
+                cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users ORDER BY username")
         users = cursor.fetchall()
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts ORDER BY post_id")
+        posts = cursor.fetchall()
 
     result_dict = {'records': users}
+    result_dict2 = {'listing': posts}
 
-    return render(request,'app/index.html',result_dict)
+    return render(request,'app/index.html',{result_dict, result_dict2})
 
 # Create your views here.
 def home(request,username):
