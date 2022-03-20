@@ -27,7 +27,9 @@ urlpatterns = [
     path('home/<str:username>/view/<str:id>', app.views.view, name='view'),
     path('home/<str:username>/post', app.views.post, name='post'),
     path('home/<str:username>/profile', app.views.profile, name='profile'),
-    path('edit/<str:id>', app.views.edit, name='edit'),
+    path('home/<str:username>/mypost', app.views.mypost, name='mypost'),
+    path('edit/<str:username>', app.views.edit, name='edit'),
     path('register', app.views.register, name='register'),
     path('index', app.views.index, name = 'index'),
+    path('adminView/<str:username>', app.views.adminView, name = 'adminView'),
 ]

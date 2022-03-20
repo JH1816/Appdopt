@@ -1,0 +1,39 @@
+<html>
+<body>
+    <h2>Details for {{user.3}}</h2>
+    <a href={% url 'index' %}>Back to index</a>
+    <br/><br/>
+    <table style='text-align:left'>
+        <tr>
+            <th>Username</th>
+            <td>:</td>
+            <td> {{ user.3 }} </td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>:</td>
+            <td> {{ user.0 }} </td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>:</td>
+            <td> {{ user.1 }} </td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>:</td>
+            <td> {{ user.2 }} </td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>:</td>
+            <td> {{ user.4 }} </td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td>:</td>
+            <td> {{ user.5 }} </td>
+        </tr>
+    </table>
+</body>
+</html>

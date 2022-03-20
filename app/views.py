@@ -13,15 +13,22 @@ def index(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
+                
+    if request.POST:            
+        if request.POST['action'] == 'deletePost':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users ORDER BY username")
         users = cursor.fetchall()
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts ORDER BY post_id")
+        posts = cursor.fetchall()
 
-    result_dict = {'records': users}
-
-    return render(request,'app/index.html',result_dict)
+    return render(request,'app/index.html',{'records': users, 'listing': posts})
 
 # Create your views here.
 def home(request,username):
@@ -86,7 +93,7 @@ def add(request):
     return render(request, "app/add.html", context)
 
 # Create your views here.
-def edit(request, id):
+def edit(request, username):
     """Shows the main page"""
 
     # dictionary for initial data with
@@ -95,7 +102,7 @@ def edit(request, id):
 
     # fetch the object related to passed id
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
         obj = cursor.fetchone()
 
     status = ''
@@ -104,11 +111,11 @@ def edit(request, id):
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE customers SET first_name = %s, last_name = %s, email = %s, dob = %s, since = %s, country = %s WHERE customerid = %s"
+            cursor.execute("UPDATE users SET first_name = %s, last_name = %s, email = %s, phone_number = %s, password = %s WHERE username = %s"
                     , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                        request.POST['dob'] , request.POST['since'], request.POST['country'], id ])
-            status = 'Customer edited successfully!'
-            cursor.execute("SELECT * FROM customers WHERE customerid = %s", [id])
+                        request.POST['phone_number'] , request.POST['password'], username ])
+            status = 'User edited successfully!'
+            cursor.execute("SELECT * FROM users WHERE username = %s", [username])
             obj = cursor.fetchone()
 
 
@@ -190,6 +197,16 @@ def post(request,username):
  
     return render(request, "app/post.html", context)
 
+def mypost(request,username):
+    """Shows the main page"""
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE username = %s ORDER BY post_id",[username])
+        posts = cursor.fetchall()
+
+    result_dict = {'currentuser': username}
+    result_dict['records'] = posts
+    return render(request,'app/mypost.html',result_dict)
+
 
 def latestpost(request,username):
     """Shows the main page"""
@@ -224,3 +241,13 @@ def profile(request, username):
             result_dict[current_action + '_status'] = status
     return render(request,'app/profile.html',result_dict)
  
+def adminView(request, username):
+    """Shows the main page"""
+    
+    ## Use raw query to get a user
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+        users = cursor.fetchone()
+    result_dict = {'user': users}
+
+    return render(request,'app/adminView.html',result_dict)
