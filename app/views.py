@@ -179,3 +179,11 @@ def post(request,username):
  
     return render(request, "app/post.html", context)
 
+
+def latestpost(request,username):
+    """Shows the main page"""
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts")
+        posts = cursor.fetchall()
+    
+
