@@ -51,7 +51,7 @@
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}
                 <input type="hidden" name="post_id" value="{{post.0}}"/>
-                <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action2" value="deletePost">Delete</button> 
+                <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action" value="deletePost">Delete</button> 
               </form></td>
         </tr>
        {% endfor %}
