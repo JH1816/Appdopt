@@ -1,0 +1,64 @@
+<html>
+<body>
+    <h2>Details for post with ID{{post.0}}</h2>
+    <a href={% url 'index' %}>Back to index</a>
+    <br/><br/>
+    <table style='text-align:left'>
+        <tr>
+            <th>Post ID</th>
+            <td>:</td>
+            <td> {{ post.0 }} </td>
+        </tr>
+        <tr>
+            <th>Poster</th>
+            <td>:</td>
+            <td> {{ post.1 }} </td>
+        </tr>
+        <tr>
+            <th>Pet</th>
+            <td>:</td>
+            <td> {{ post.2 }} </td>
+        </tr>
+        <tr>
+            <th>Breed</th>
+            <td>:</td>
+            <td> {{ post.3 }} </td>
+        </tr>
+        <tr>
+            <th>Date of Post</th>
+            <td>:</td>
+            <td> {{ post.4 }} </td>
+        </tr>
+        <tr>
+            <th>Age of pet</th>
+            <td>:</td>
+            <td> {{ post.5 }} </td>
+        </tr>
+        <tr>
+            <th>Price of pet</th>
+            <td>:</td>
+            <td> {{ post.6 }} </td>
+        </tr>
+        <tr>
+            <th>Gender of pet</th>
+            <td>:</td>
+            <td> {{ post.10 }} </td>
+        </tr>
+        <tr>
+            <th>Title of post</th>
+            <td>:</td>
+            <td> {{ post.8 }} </td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>:</td>
+            <td> {{ post.7 }} </td>
+        </tr>
+        <tr>
+            <th>Status of post</th>
+            <td>:</td>
+            <td> {{ post.9 }} </td>
+        </tr>
+    </table>
+</body>
+</html>

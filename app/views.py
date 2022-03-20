@@ -13,15 +13,24 @@ def index(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
+                cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users ORDER BY username")
+<<<<<<< Updated upstream
+=======
+        users = cursor.fetchall()
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts ORDER BY post_id")
+>>>>>>> Stashed changes
         posts = cursor.fetchall()
 
     result_dict = {'records': users}
+    result_dict2 = {'listing': posts}
 
-    return render(request,'app/index.html',result_dict)
+    return render(request,'app/index.html',{result_dict, result_dict2})
 
 # Create your views here.
 def home(request,username):
@@ -179,3 +188,44 @@ def post(request,username):
  
     return render(request, "app/post.html", context)
 
+<<<<<<< Updated upstream
+=======
+def mypost(request,username):
+    """Shows the main page"""
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE username = %s ORDER BY post_id",[username])
+        posts = cursor.fetchall()
+
+    result_dict = {'currentuser': username}
+    result_dict['records'] = posts
+    return render(request,'app/mypost.html',result_dict)
+
+
+def latestpost(request,username):
+    """Shows the main page"""
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts")
+        posts = cursor.fetchall()
+    
+def adminView(request, username):
+    """Shows the main page"""
+    
+    ## Use raw query to get a user
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+        users = cursor.fetchone()
+    result_dict = {'user': users}
+
+    return render(request,'app/adminView.html',result_dict)
+
+def postView(request, post_id):
+    """Shows the main page"""
+    
+    ## Use raw query to get a user
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
+        posts = cursor.fetchone()
+    result_dict = {'post': posts}
+
+    return render(request,'app/postView.html',result_dict)
+>>>>>>> Stashed changes

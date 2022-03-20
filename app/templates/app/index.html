@@ -23,8 +23,40 @@
                 | 
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}
+<<<<<<< Updated upstream
                 <input type="hidden" name="id" value="{{user.3}}"/>
                 <button onclick="return confirm('Are you sure you want to delete {{user.3}}?');" type="submit" name="action" value="delete">Delete</button> 
+=======
+                <input type="hidden" name="username" value="{{user.3}}"/>
+                <button onclick="return confirm('Are you sure you want to delete {{user.3}}?');" type="submit" name="action" value="delete">Delete</button> 
+              </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <table border=1 style="float: left;margin-right:20px">
+        <thead>
+            <th>Post ID</th>
+            <th>Username</th>
+            <th>Date of Post</th>
+            <th>Status</th>
+            
+        </thead>
+        {% for post in listing %}
+        <tr>
+            <td> {{ post.0 }} </td>
+            <td> {{ post.1 }} </td>
+            <td> {{ post.4 }} </td>
+            <td> {{ post.9 }} </td>
+            <td>
+                <a href="postView/{{post.0}}"><button>View</button></a> | 
+                <a href="edit/{{user.3}}"><button>Edit</button></a>
+                | 
+                <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{post.0}}"/>
+                <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action" value="delete">Delete</button> 
+>>>>>>> Stashed changes
               </form></td>
         </tr>
         {% endfor %}
