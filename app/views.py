@@ -13,6 +13,9 @@ def index(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
+                
+        if request.POST['action'] == 'deletePost':
+            with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
 
     ## Use raw query to get all objects
