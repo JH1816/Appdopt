@@ -46,7 +46,7 @@
             <td> {{ post.9 }} </td>
             <td>
                 <a href="postView/{{post.0}}"><button>View</button></a> | 
-                <a href="edit/{{user.3}}"><button>Edit</button></a>
+                <a href="postEdit/{{post.0}}"><button>Edit</button></a>
                 | 
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}

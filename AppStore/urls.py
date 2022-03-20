@@ -33,4 +33,5 @@ urlpatterns = [
     path('index', app.views.index, name = 'index'),
     path('adminView/<str:username>', app.views.adminView, name = 'adminView'),
     path('postView/<int:post_id>', app.views.postView, name = 'postView'),
+    path('postEdit/<int:post_id>', app.views.postEdit, name = 'postEdit')
 ]
