@@ -33,7 +33,7 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="{% url 'post' currentuser %}">Post</a>
-              <a class="nav-item nav-link" href="#">Profile</a>
+              <a class="nav-item nav-link" href="{% url 'profile' currentuser %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
             </div>
           </div>
