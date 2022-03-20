@@ -5,7 +5,7 @@
     <img src="{% static 'app/images/logo.png' %}" width="20%"   alt="Appdopt logo"/><br/>
     <a href="add">New User</a>
     <br/><br/>
-    <table border=1>
+    <table border=1 "float: left;margin-right:20px">
         <thead>
             <th>Username</th>
             <th>First Name</th>
@@ -29,8 +29,8 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="add">Test button</a>
-    <table border=1 style="float: left;margin-right:20px">
+    
+    <table border=1 style="float: left">
         <thead>
             <th>Post ID</th>
             <th>Username</th>
@@ -38,23 +38,23 @@
             <th>Status</th>
             
         </thead>
-#        {% for post in listing %}
-#        <tr>
-#            <td> {{ post.0 }} </td>
-#            <td> {{ post.1 }} </td>
-#            <td> {{ post.4 }} </td>
-#            <td> {{ post.9 }} </td>
-#            <td>
-#                <a href="postView/{{post.0}}"><button>View</button></a> | 
-#                <a href="edit/{{user.3}}"><button>Edit</button></a>
-#                | 
-#                <form method="POST" style="display: inline;">
-#                {% csrf_token %}
-#                <input type="hidden" name="post_id" value="{{post.0}}"/>
-#                <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action" value="delete">Delete</button> 
-#              </form></td>
-#        </tr>
-#       {% endfor %}
+        {% for post in listing %}
+        <tr>
+            <td> {{ post.0 }} </td>
+            <td> {{ post.1 }} </td>
+            <td> {{ post.4 }} </td>
+            <td> {{ post.9 }} </td>
+            <td>
+                <a href="postView/{{post.0}}"><button>View</button></a> | 
+                <a href="edit/{{user.3}}"><button>Edit</button></a>
+                | 
+                <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{post.0}}"/>
+                <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action" value="delete">Delete</button> 
+              </form></td>
+        </tr>
+       {% endfor %}
     </table>
 </body>
 </html>
