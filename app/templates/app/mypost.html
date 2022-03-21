@@ -10,6 +10,12 @@
             <h2><a class="article-title" href="{% url 'view' username=currentuser  id=post.0 %}">{{ post.8 }}</a></h2>
             <p class="article-content">{{ post.7 }}</p>
           </div>
+          <td>
+            <form method="POST" style="display: inline;">
+              {% csrf_token %}
+              <input type="hidden" name="post_id" value="{{post.0}}"/>
+              <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action" value="deletePost">Delete</button> 
+            </form></td>
         </article>
     {% endfor %}
 {% endblock content %}

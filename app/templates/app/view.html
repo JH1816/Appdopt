@@ -7,8 +7,7 @@
         <small class="text-muted">{{ cust.4|date:"F d, Y" }}</small>
         {% if cust.1 == currentuser %}
           <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' cust.0 %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' cust.0 %}">Delete</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userpostEdit' post_id=cust.0 username=cust.1%}">Edit post</a>
           </div>
         {% endif %}
       </div>

@@ -1,0 +1,24 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            <!-- Security token by Django -->
+            {% csrf_token %}
+            <!-- form -->
+            <div id="div_id_pet" class="control-group"> <label for="id_pet" class="control-label requiredField">
+            Pet<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="pet" value="{{obj.2}}" maxlength="20" class="textinput textInput" required="" id="id_pet"> </div> </div> <div id="div_id_breed" class="control-group"> <label for="id_breed" class="control-label requiredField">
+            Breed<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="breed" value="{{obj.3}}" maxlength="64" class="textinput textInput" required="" id="id_breed"> </div> </div> <div id="div_id_date_of_post" class="control-group"> <label for="id_date_of_post" class="control-label requiredField">
+            Date of post (yyyy-mm-dd)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="date_of_post" value="{{obj.4|slugify}}" class="dateinput" required="" id="id_date_of_post"> </div> </div> <div id="div_id_age_of_pet" class="control-group"> <label for="id_age_of_pet" class="control-label requiredField"></label>
+            Age of pet </label> <div class="controls"> <input type="text" name="age_of_pet" value="{{obj.5}}" maxlength="16" class="textinput textInput" id="id_age_of_pet"> </div> </div> <div id="div_id_price" class="control-group"> <label for="id_price" class="control-label requiredField">
+            Price<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="price" value="{{obj.6}}" maxlength="16" class="textinput textInput" required="" id="id_price"> </div> </div> <div id="div_id_description" class="control-group"> <label for="id_description" class="control-label requiredField">
+            Description<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="description" value="{{obj.7}}" maxlength="1200" class="textinput textInput" required="" id="id_description"> </div> </div> <div id="div_id_title" class="control-group"> <label for="id_title" class="control-label requiredField">
+            Title<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="title" value="{{obj.8}}" maxlength="128" class="textinput textInput" required="" id="id_title"> </div> </div> <div id="div_id_gender" class="control-group"> <label for="id_gender" class="control-label requiredField">
+            Gender<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="gender" value="{{obj.10}}" maxlength="6" class="textinput textInput" required="" id="id_gender"> </div> </div> <div id="div_id_status" class="control-group"> <label for="id_status" class="control-label requiredField">
+            Status<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="status" value="{{obj.9}}" maxlength="50" class="textinput textInput" required="" id="id_status"> </div> </div>
+    
+            <br>
+            <button type="submit" value="Update">Update</button>
+        </form>
+        <p style="color:red">{{ status }}</p>
+    </div>
+{% endblock content %}
