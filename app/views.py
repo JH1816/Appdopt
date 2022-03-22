@@ -63,8 +63,8 @@ def register(request):
         
         with connection.cursor() as cursor:
                
-            try: 
-                cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
+            # try: 
+            cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
             # except Exception as e:
             #     string = str(e)
 
@@ -76,7 +76,7 @@ def register(request):
                 # elif 'new row for relation "users" violates check constraint "users_mobile_number_check"' in string:
                 #     message = 'Please enter a valid Singapore number!'
 
-                return render(request, 'app/register.html')
+                # return render(request, 'app/register.html')
             
             user = User.objects.create_user(email, password = password)
             user.save()
