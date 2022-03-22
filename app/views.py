@@ -2,7 +2,56 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
+# Login page
+def login_page(request):
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users")
+        users = cursor.fetchall()
+
+    for user in users:
+        user_temp = User.objects.create_user(user[3], password = user[5])
+        user_temp.save()
+    
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        ## Authenticates against ORM
+        user = authenticate(request, username = username, password = password)
+        
+        ## Username and password exists in ORM
+        if user is not None:
+            
+            ## Queries from PostgreSQL
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+                entry = cursor.fetchone()
+                
+                if entry[6] == 'user':
+                    login(request, user)
+                    return redirect('home',username=username)
+                    
+                elif entry[6] == 'admin':
+                    login(request, user)
+                    return redirect('admin')
+                
+        ## Username and password does not exist in ORM
+        else:
+            messages.error(request, 'Incorrect username or password.')
+            return render(request, 'app/login.html')
+
+    return render(request, 'app/login.html')
+
+# Logout page
+def logout_page(request):
+    
+    logout(request)
+    
+    return redirect('login')
 
 # Create your views here.
 def index(request):
@@ -151,23 +200,23 @@ def register(request):
  
     return render(request, "app/register.html", context)
 
-def login(request):
-    context = {}
-    status = ''
-    if request.POST:
-        with connection.cursor() as cursor:
-
-            cursor.execute("SELECT * FROM users WHERE  username= %s AND  password =%s", [request.POST['username'], request.POST['password']])
-            customer = cursor.fetchone()
-            ## No user with that user name or wrong password
-            if customer != None:
-                return redirect('home',username=request.POST['username'])    
-            else:
-                status = 'Wrong password or username'
-
-
-    context['status'] = status
-    return render(request, 'app/login.html', context)
+#def login(request):
+#    context = {}
+#    status = ''
+#    if request.POST:
+#        with connection.cursor() as cursor:
+#
+#            cursor.execute("SELECT * FROM users WHERE  username= %s AND  password =%s", [request.POST['username'], request.POST['password']])
+#            customer = cursor.fetchone()
+#            ## No user with that user name or wrong password
+#            if customer != None:
+#                return redirect('home',username=request.POST['username'])    
+#            else:
+#                status = 'Wrong password or username'
+#
+#
+#    context['status'] = status
+#    return render(request, 'app/login.html', context)
 
 
 def post(request,username):
