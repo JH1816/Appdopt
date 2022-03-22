@@ -71,7 +71,7 @@ def index(request):
 
     return render(request,'app/index.html',{'records': users, 'listing': posts})
 
-# Create your views here.
+@login_required(login_url = 'login')
 def home(request,username):
     """Shows the main page"""
     with connection.cursor() as cursor:
