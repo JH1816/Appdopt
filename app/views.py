@@ -71,10 +71,10 @@ def register(request):
                 if 'duplicate key value violates unique constraint "users_email_key"' in string:  
                     messages.error(request, "This email has been taken. Try again")
 
-                elif 'new row for relation "users" violates check constraint "users_email_address_check"' in string:
-                    message = 'Please enter a valid email address!'
-                elif 'new row for relation "users" violates check constraint "users_mobile_number_check"' in string:
-                    message = 'Please enter a valid Singapore number!'
+                # elif 'new row for relation "users" violates check constraint "users_email_address_check"' in string:
+                #     message = 'Please enter a valid email address!'
+                # elif 'new row for relation "users" violates check constraint "users_mobile_number_check"' in string:
+                #     message = 'Please enter a valid Singapore number!'
 
                 return render(request, 'app/register.html')
             
