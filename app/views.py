@@ -45,6 +45,48 @@ def logout_page(request):
     
     return redirect('login')
 
+
+def register(request):
+
+    if request.POST:
+        
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        username = request.POST['username']
+        phone_number = request.POST['phone_number']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        
+        if password != confirm_password:
+            messages.error(request, "Those passwords didn't match. Try again")
+            return render(request, 'app/register.html')
+        
+        with connection.cursor() as cursor:
+               
+            try: 
+                cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
+            except Exception as e:
+                string = str(e)
+
+                if 'duplicate key value violates unique constraint "users_email_key"' in string:  
+                    messages.error(request, "This email has been taken. Try again")
+
+                elif 'new row for relation "users" violates check constraint "users_email_address_check"' in string:
+                    message = 'Please enter a valid email address!'
+                elif 'new row for relation "users" violates check constraint "users_mobile_number_check"' in string:
+                    message = 'Please enter a valid Singapore number!'
+
+                return render(request, 'app/register.html')
+            
+            user = User.objects.create_user(email, password = password)
+            user.save()
+            messages.success(request, f'Account successfully created!')
+
+            return redirect('home', username)
+
+    return render(request, 'app/register.html')
+
 # Create your views here.
 def index(request):
     """Shows the main page"""
@@ -164,51 +206,6 @@ def edit(request, username):
     context["status"] = status
  
     return render(request, "app/edit.html", context)
-
-
-def register(request):
-    context = {}
-    status = ''
-
-    if request.POST:
-        ## Check if username is already in the table
-        with connection.cursor() as cursor:
-
-            cursor.execute("SELECT * FROM users WHERE  username= %s ", [request.POST['username']])
-            customer = cursor.fetchone()
-            ## No customer with same id
-            if customer == None:
-                ##TODO: date validation
-                cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)"
-                        , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                           request.POST['username'] , request.POST['phonenumber'], request.POST['password']])
-                messages.success(request, f'Account successfully created!')
-                return redirect('home',username=request.POST['username'])    
-            else:
-                status = 'User with username %s already exists' % (request.POST['username'])
-
-
-    context['status'] = status
- 
-    return render(request, "app/register.html", context)
-
-#def login(request):
-#    context = {}
-#    status = ''
-#    if request.POST:
-#        with connection.cursor() as cursor:
-#
-#            cursor.execute("SELECT * FROM users WHERE  username= %s AND  password =%s", [request.POST['username'], request.POST['password']])
-#            customer = cursor.fetchone()
-#            ## No user with that user name or wrong password
-#            if customer != None:
-#                return redirect('home',username=request.POST['username'])    
-#            else:
-#                status = 'Wrong password or username'
-#
-#
-#    context['status'] = status
-#    return render(request, 'app/login.html', context)
 
 
 def post(request,username):
