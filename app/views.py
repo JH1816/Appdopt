@@ -49,18 +49,17 @@ def logout_page(request):
 def register(request):
 
     if request.POST:
-        
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         username = request.POST.get('username')
         phone_number = request.POST.get('phonenumber')
         password = request.POST.get('password')
-        confirm_password = request.POST.get('Confirm password')
+        confirm_password = request.POST.get('Confirm Password')
         
-        # if password != confirm_password:
-        #     messages.error(request, "Those passwords didn't match. Try again")
-        #     return render(request, 'app/register.html')
+        if password != confirm_password:
+            messages.error(request, "Those passwords didn't match. Try again")
+            return render(request, 'app/register.html')
         
         with connection.cursor() as cursor:
                
