@@ -76,7 +76,6 @@ insert into users (first_name, last_name, email, username, phone_number, passwor
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Alvie', 'Passo', 'apasso22@goo.gl', 'apasso22', '1567993007', 'fnvux37');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Lin', 'Tinan', 'ltinan23@freewebs.com', 'ltinan23', '5152967226', 'xYXScda');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Jourdain', 'Fessler', 'jfessler24@yelp.com', 'jfessler24', '5045962472', 'qkkk4PLba');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Archibaldo', 'Burdikin', 'aburdikin25@prlog.org', 'aburdikin25', '8815164996', 'wxJmyugj7kF4');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Rici', 'Seabrooke', 'rseabrooke26@pen.io', 'rseabrooke26', '4784457433', 'p42cflPJLh');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Rosemary', 'Creese', 'rcreese27@microsoft.com', 'rcreese27', '4743026395', 'buTjxOCELQB');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Gordie', 'Allison', 'gallison28@apache.org', 'gallison28', '2883989343', 'E36fxJTKe4z');
