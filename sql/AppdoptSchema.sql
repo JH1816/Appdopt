@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users(
 	username VARCHAR(50) PRIMARY KEY,
 	phone_number VARCHAR(16) UNIQUE NOT NULL,
 	password VARCHAR(50) NOT NULL,
-	type VARCHAR NOT NULL DEFAULT 'user' CHECK(type = 'user' OR type = 'admin)
+	type VARCHAR NOT NULL DEFAULT 'user' CHECK(type = 'user' OR type = 'admin')
 );
 	
 CREATE TABLE IF NOT EXISTS posts(
