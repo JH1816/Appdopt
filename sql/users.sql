@@ -99,14 +99,6 @@ insert into users (first_name, last_name, email, username, phone_number, passwor
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Rosemonde', 'Stansbury', 'rstansbury2q@shareasale.com', 'rstansbury2q', '6967089251', 'hIy9HiV7BRU');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Gerri', 'Scimone', 'gscimone2r@adobe.com', 'gscimone2r', '5517856290', 'Gn99cj');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Morgen', 'Smallwood', 'msmallwood2s@com.com', 'msmallwood2s', '2984976870', 'o1S8DhC5N');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Donna', 'Lister', 'dlister2t@bloglovin.com', 'dlister2t', '4936648550', 'ADATTPZwUG');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Salome', 'Desson', 'sdesson2u@shareasale.com', 'sdesson2u', '3772828334', 'Lq8ouXL');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Jocelin', 'Minett', 'jminett2v@wired.com', 'jminett2v', '1715863455', '1YzP2JiEw');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Richie', 'Wardington', 'rwardington2w@chron.com', 'rwardington2w', '9753141941', 'WEJMjcFZRsK');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Vannie', 'Crofts', 'vcrofts2x@sourceforge.net', 'vcrofts2x', '3578451032', '0hUnMR');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Roderigo', 'Caustic', 'rcaustic2y@netlog.com', 'rcaustic2y', '3634139388', 'sZm3Kkea');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Randi', 'Vardy', 'rvardy2z@dagondesign.com', 'rvardy2z', '5833638805', 'H7HJjGzNg0');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Cherise', 'Ellacombe', 'cellacombe30@cloudflare.com', 'cellacombe30', '9059061601', 'NXRFWFZ');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Alicia', 'Island', 'aisland31@nbcnews.com', 'aisland31', '2145013817', 'FiJgRThdNOf');
+
 
 
