@@ -45,7 +45,7 @@ def logout_page(request):
     
     return redirect('login')
 
-
+# Register page
 def register(request):
 
     if request.POST:
@@ -57,6 +57,7 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('Confirm Password')
         
+        ## Checks if passwords are the same
         if password != confirm_password:
             messages.error(request, "Those passwords didn't match. Try again.")
             return render(request, 'app/register.html')
@@ -64,22 +65,32 @@ def register(request):
         with connection.cursor() as cursor:
                
             try: 
+                ## Inserts into PostgreSQL database
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
+            
             except Exception as e:
 
                 string = str(e)
 
+                ## Checks for uniqueness of email
                 if 'duplicate key value violates unique constraint "users_email_key"' in string:  
                     messages.error(request, "This email has been taken. Try again.")
+
+                ## Checks for uniqueness of username
                 elif 'duplicate key value violates unique constraint "users_pkey"' in string:
                     messages.error(request, 'Username has been taken. Try again.')
+
+                ## Checks for structure of email
                 elif 'new row for relation "users" violates check constraint "users_email_check"' in string:
                     messages.error(request, 'Invalid email. Try again.')
+
+                ## Checks for uniqueness of phone number
                 elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
                     messages.error(request, 'This phone number exists. Try again.')
 
                 return render(request, 'app/register.html')
             
+            ## Registers into the ORM
             user = User.objects.create_user(username = username, password = password)
             user.save()
 
