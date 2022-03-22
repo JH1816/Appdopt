@@ -8,14 +8,6 @@ from django.contrib.auth.decorators import login_required
 # Login page
 def login_page(request):
     
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users")
-        users = cursor.fetchall()
-
-    for user in users:
-        user_temp = User.objects.create_user(user[3], password = user[5])
-        user_temp.save()
-    
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
