@@ -47,14 +47,14 @@
                         Password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="password" name="password" maxlength="64" class="textinput textInput" required="" id="id_Password"> </div> </div> <div id="div_id_Password" class="control-group"> <label for="id_Password" class="control-label requiredField">
                         Confirm Password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="password" name="Confirm Password" maxlength="64" class="textinput textInput" required="" id="id_Confirm_Password"> </div> </div> <div id="div_id_Confirm_Password" class="control-group"> <label for="id_Confirm_Password" class="control-label requiredField"></label>
                     
-                        {% if messages %}
-                            <ul class="messages">
-                                {% for message in messages %}
-                                    <li>{{ message }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
                         <br>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </fieldset>
                 <div class="form-group">
                     <button class="btn btn-outline-info" type="submit">Sign Up</button>

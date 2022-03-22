@@ -82,10 +82,10 @@ def register(request):
             
             user = User.objects.create_user(username = username, password = password)
             user.save()
-            
+
             messages.success(request, f'Account successfully created!')
 
-            return redirect('home', username)
+            return redirect('home', username = username)
 
     return render(request, 'app/register.html')
 
