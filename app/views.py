@@ -58,28 +58,31 @@ def register(request):
         confirm_password = request.POST.get('Confirm Password')
         
         if password != confirm_password:
-            messages.error(request, "Those passwords didn't match. Try again")
+            messages.error(request, "Those passwords didn't match. Try again.")
             return render(request, 'app/register.html')
         
         with connection.cursor() as cursor:
                
-            # try: 
-            cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
-            # except Exception as e:
-            #     string = str(e)
+            try: 
+                cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
+            except Exception as e:
 
-            #     if 'duplicate key value violates unique constraint "users_email_key"' in string:  
-            #         messages.error(request, "This email has been taken. Try again")
+                string = str(e)
 
-                # elif 'new row for relation "users" violates check constraint "users_email_address_check"' in string:
-                #     message = 'Please enter a valid email address!'
-                # elif 'new row for relation "users" violates check constraint "users_mobile_number_check"' in string:
-                #     message = 'Please enter a valid Singapore number!'
+                if 'duplicate key value violates unique constraint "users_email_key"' in string:  
+                    messages.error(request, "This email has been taken. Try again.")
+                elif 'duplicate key value violates unique constraint "users_pkey"' in string:
+                    messages.error(request, 'Username has been taken. Try again.')
+                elif 'new row for relation "users" violates check constraint "users_email_check"' in string:
+                    messages.error(request, 'Invalid email. Try again.')
+                elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
+                    messages.error(request, 'This phone number exists. Try again.')
 
-                # return render(request, 'app/register.html')
+                return render(request, 'app/register.html')
             
-            user = User.objects.create_user(email, password = password)
+            user = User.objects.create_user(username = username, password = password)
             user.save()
+            
             messages.success(request, f'Account successfully created!')
 
             return redirect('home', username)
