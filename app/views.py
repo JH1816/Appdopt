@@ -13,8 +13,11 @@ def login_page(request):
         users = cursor.fetchall()
 
     for user in users:
-        user_temp = User.objects.create_user(user[3], password = user[5])
-        user_temp.save()
+        if User.objects.get(username = username):
+            pass 
+        else:
+            user_temp = User.objects.create_user(user[3], password = user[5])
+            user_temp.save()
     
     if request.POST:
         username = request.POST['username']
