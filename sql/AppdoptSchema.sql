@@ -1,10 +1,11 @@
 CREATE TABLE IF NOT EXISTS users(
 	first_name VARCHAR(64) NOT NULL,
 	last_name VARCHAR(64) NOT NULL,
-	email VARCHAR(128) UNIQUE NOT NULL,
+	email VARCHAR(128) UNIQUE NOT NULL CHECK (email LIKE '_%@_%._%'),
 	username VARCHAR(50) PRIMARY KEY,
 	phone_number VARCHAR(16) UNIQUE NOT NULL,
-	password VARCHAR(50) NOT NULL
+	password VARCHAR(50) NOT NULL,
+	type VARCHAR NOT NULL DEFAULT 'user' CHECK(type = 'user' OR type = 'admin)
 );
 	
 CREATE TABLE IF NOT EXISTS posts(
