@@ -58,9 +58,9 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('Confirm password')
         
-        if password != confirm_password:
-            messages.error(request, "Those passwords didn't match. Try again")
-            return render(request, 'app/register.html')
+        # if password != confirm_password:
+        #     messages.error(request, "Those passwords didn't match. Try again")
+        #     return render(request, 'app/register.html')
         
         with connection.cursor() as cursor:
                
