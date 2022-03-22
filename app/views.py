@@ -13,7 +13,7 @@ def login_page(request):
         users = cursor.fetchall()
 
     for user in users:
-        if User.objects.get(username = username):
+        if User.objects.get(username = user[3]):
             pass 
         else:
             user_temp = User.objects.create_user(user[3], password = user[5])
