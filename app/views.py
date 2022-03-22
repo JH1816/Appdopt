@@ -50,13 +50,13 @@ def register(request):
 
     if request.POST:
         
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        username = request.POST['username']
-        phone_number = request.POST['phone_number']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        phone_number = request.POST.get('phone_number')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
         
         if password != confirm_password:
             messages.error(request, "Those passwords didn't match. Try again")
