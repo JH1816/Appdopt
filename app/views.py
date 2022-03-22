@@ -54,12 +54,12 @@ def register(request):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         username = request.POST.get('username')
-        phone_number = request.POST.get('phone_number')
+        phone_number = request.POST.get('phonenumber')
         password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
+        confirm_password = request.POST.get('Confirm password')
         
         if password != confirm_password:
-            #messages.error(request, "Those passwords didn't match. Try again")
+            messages.error(request, "Those passwords didn't match. Try again")
             return render(request, 'app/register.html')
         
         with connection.cursor() as cursor:
