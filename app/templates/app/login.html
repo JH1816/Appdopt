@@ -45,6 +45,13 @@
                             Password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="password" name="password" maxlength="64" class="textinput textInput" required="" id="id_Password"> </div> </div> <div id="div_id_Password" class="control-group"> <label for="id_Password" class="control-label requiredField">
                             <br>
                     </fieldset>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     <div class="form-group">
                         <button class="btn btn-outline-info" type="login">Login</button>
                     </div>
