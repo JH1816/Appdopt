@@ -13,11 +13,8 @@ def login_page(request):
         users = cursor.fetchall()
 
     for user in users:
-        if User.objects.get(username = user[3]) is not None:
-            pass 
-        else:
-            user_temp = User.objects.create_user(user[3], password = user[5])
-            user_temp.save()
+        user_temp = User.objects.create_user(user[3], password = user[5])
+        user_temp.save()
     
     if request.POST:
         username = request.POST['username']
