@@ -65,11 +65,11 @@ def register(request):
                
             try: 
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
-            except Exception as e:
-                string = str(e)
+            # except Exception as e:
+            #     string = str(e)
 
-                if 'duplicate key value violates unique constraint "users_email_key"' in string:  
-                    messages.error(request, "This email has been taken. Try again")
+            #     if 'duplicate key value violates unique constraint "users_email_key"' in string:  
+            #         messages.error(request, "This email has been taken. Try again")
 
                 # elif 'new row for relation "users" violates check constraint "users_email_address_check"' in string:
                 #     message = 'Please enter a valid email address!'
