@@ -119,7 +119,7 @@ def home(request, username):
         return redirect('home', username = request.user.username)
 
 
-# Create your views here.
+# Admin index page
 def index(request):
     """Shows the main page"""
 
@@ -145,6 +145,53 @@ def index(request):
 
     return render(request,'app/index.html',{'records': users, 'listing': posts})
 
+# Create your views here.
+def addUser(request):
+
+    if request.POST:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        phone_number = request.POST.get('phone_number')
+        password = request.POST.get('password')
+
+        with connection.cursor() as cursor:
+
+            try: 
+                ## Inserts into PostgreSQL database
+                cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
+            
+            except Exception as e:
+
+                string = str(e)
+
+                ## Checks for uniqueness of email
+                if 'duplicate key value violates unique constraint "users_email_key"' in string:  
+                    messages.error(request, "This email has been taken. Try again.")
+
+                ## Checks for uniqueness of username
+                elif 'duplicate key value violates unique constraint "users_pkey"' in string:
+                    messages.error(request, 'Username has been taken. Try again.')
+
+                ## Checks for structure of email
+                elif 'new row for relation "users" violates check constraint "users_email_check"' in string:
+                    messages.error(request, 'Invalid email. Try again.')
+
+                ## Checks for uniqueness of phone number
+                elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
+                    messages.error(request, 'This phone number exists. Try again.')
+
+                return render(request, 'app/add.html')
+
+            user = User.objects.create_user(username = username, password = password)
+            user.save()
+
+            messages.success(request, 'Account successfully created!')
+
+            return redirect('add')
+
+    return render(request, 'app/add.html')
 
 # Create your views here.
 def view(request, id,username):
@@ -171,31 +218,6 @@ def view(request, id,username):
 
     return render(request,'app/view.html',result_dict)
 
-# Create your views here.
-def add(request):
-    context = {}
-    status = ''
-
-    if request.POST:
-        ## Check if username is already in the table
-        with connection.cursor() as cursor:
-
-            cursor.execute("SELECT * FROM users WHERE username = %s", [request.POST['username']])
-            users = cursor.fetchone()
-            ## No same username
-            if users == None:
-                ##TODO: date validation
-                cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)"
-                        , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                           request.POST['username'] , request.POST['phone_number'], request.POST['password'] ])
-                return redirect('index')    
-            else:
-                status = 'User with username %s already exists' % (request.POST['username'])
-
-
-    context['status'] = status
- 
-    return render(request, "app/add.html", context)
 
 # Create your views here.
 def edit(request, username):
