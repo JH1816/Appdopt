@@ -224,7 +224,7 @@ def edit(request, username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users WHERE username = %s", [username])
         obj = cursor.fetchone()
-        
+
     context["obj"] = obj
     status = ''
     # save the data from the form
@@ -276,6 +276,46 @@ def edit(request, username):
     return render(request, "app/edit.html", context)
 
 
+# View posts on admin page
+def postView(request, post_id):
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
+        posts = cursor.fetchone()
+    result_dict = {'post': posts}
+
+    return render(request,'app/postView.html',result_dict)
+
+# Edit posts on admin page
+def postEdit(request, post_id):
+    
+    context ={}
+
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
+        obj = cursor.fetchone()
+
+    status = ''
+    
+
+    if request.POST:
+        
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE posts SET pet = %s, breed = %s, date_of_post = %s, age_of_pet = %s, price = %s, description = %s, title = %s, status = %s, gender = %s WHERE post_id = %s"
+                    , [request.POST['pet'], request.POST['breed'], request.POST['date_of_post'],
+                        request.POST['age_of_pet'] , request.POST['price'], request.POST['description'], request.POST['title'], request.POST['status'], request.POST['gender'], post_id ])
+            status = 'Post edited successfully!'
+            cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
+            obj = cursor.fetchone()
+
+
+    context["obj"] = obj
+    context["status"] = status
+ 
+    return render(request, "app/postEdit.html", context)
+
+    
 # Create your views here.
 def view(request, id,username):
     """Shows the main page"""
@@ -380,49 +420,6 @@ def profile(request, username):
 
             result_dict[current_action + '_status'] = status
     return render(request,'app/profile.html',result_dict)
- 
-
-def postView(request, post_id):
-    """Shows the main page"""
-    
-    ## Use raw query to get a post
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
-        posts = cursor.fetchone()
-    result_dict = {'post': posts}
-
-    return render(request,'app/postView.html',result_dict)
-
-def postEdit(request, post_id):
-    """Shows the main page"""
-
-    # dictionary for initial data with
-    # field names as keys
-    context ={}
-
-    # fetch the object related to passed id
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
-        obj = cursor.fetchone()
-
-    status = ''
-    # save the data from the form
-
-    if request.POST:
-        ##TODO: date validation
-        with connection.cursor() as cursor:
-            cursor.execute("UPDATE posts SET pet = %s, breed = %s, date_of_post = %s, age_of_pet = %s, price = %s, description = %s, title = %s, status = %s, gender = %s WHERE post_id = %s"
-                    , [request.POST['pet'], request.POST['breed'], request.POST['date_of_post'],
-                        request.POST['age_of_pet'] , request.POST['price'], request.POST['description'], request.POST['title'], request.POST['status'], request.POST['gender'], post_id ])
-            status = 'Post edited successfully!'
-            cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
-            obj = cursor.fetchone()
-
-
-    context["obj"] = obj
-    context["status"] = status
- 
-    return render(request, "app/postEdit.html", context)
 
 @login_required(login_url = 'login')
 def userpostEdit(request, post_id,username):
