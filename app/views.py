@@ -121,13 +121,15 @@ def home(request, username):
 
 # Admin index page
 def index(request):
-    """Shows the main page"""
 
     ## Delete user
     if request.POST:
+        username = request.POST.get('username')
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
+                u = User.objects.get(username = username)
+                u.delete()
+                cursor.execute("DELETE FROM users WHERE username = %s", [username])
 
     ## Delete post            
     if request.POST:            
