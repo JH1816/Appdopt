@@ -24,7 +24,6 @@ urlpatterns = [
     path('', app.views.login_page, name='login'),
     path('logout/', app.views.logout_page, name = "logout"),
     path('register', app.views.register, name='register'),
-    path('<str:username>', app.views.home, name='home'),
     path('add', app.views.add, name='add'),
     path('<str:username>/view/<str:id>', app.views.view, name='view'),
     path('<str:username>/post', app.views.post, name='post'),
@@ -36,4 +35,5 @@ urlpatterns = [
     path('postView/<int:post_id>', app.views.postView, name = 'postView'),
     path('postEdit/<int:post_id>', app.views.postEdit, name = 'postEdit'),
     path('<str:username>/userpostEdit/<int:post_id>', app.views.userpostEdit, name = 'userpostEdit'),
+    path('<str:username>', app.views.home, name='home'),
 ]
