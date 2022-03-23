@@ -1,7 +1,7 @@
 <html>
 <body>
     <h2>Add New Customer</h2>
-    <a href="index">Back to index</a>
+    <a href={% url 'index' %}>Back to index</a>
 
     <p style="color:red">{{ status|safe }}</p>
     <!-- Create a Form -->
@@ -20,6 +20,13 @@
         <br>
         <button type="submit" value="Add">Add</button>
     </form>
+    {% if messages%}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 </body>
 </html>
 

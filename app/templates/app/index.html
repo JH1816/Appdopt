@@ -3,7 +3,7 @@
 <body>
     <h2>Post in Appdopt</h2>
     <img src="{% static 'app/images/logo.png' %}" width="20%"   alt="Appdopt logo"/><br/>
-    <a href="add">New User</a>
+    <a href="index/add">New User</a>
     <br/><br/>
     <table border=1 style = "float: left;margin-right:20px">
         <thead>
@@ -18,7 +18,7 @@
             <td> {{ user.0 }} </td>
             <td> {{ user.1 }} </td>
             <td>
-                <a href="adminView/{{user.3}}"><button>View</button></a> | 
+                <a href="index/adminView/{{user.3}}"><button>View</button></a> | 
                 <a href="edit/{{user.3}}"><button>Edit</button></a>
                 | 
                 <form method="POST" style="display: inline;">
