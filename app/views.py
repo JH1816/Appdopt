@@ -257,8 +257,6 @@ def edit(request, username):
                 elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
                     messages.error(request, 'This phone number exists. Try again.')
 
-                return render(request, 'app/edit.html')
-
             u = User.objects.get(username = username)
             u.delete()
             user = User.objects.create_user(username = username, password = password)
