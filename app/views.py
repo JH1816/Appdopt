@@ -129,13 +129,18 @@ def index(request):
 @login_required(login_url = 'login')
 def home(request,username):
     """Shows the main page"""
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM posts ORDER BY post_id")
-        posts = cursor.fetchall()
+    if request.user.username == username:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM posts ORDER BY post_id")
+            posts = cursor.fetchall()
 
-    result_dict = {'currentuser': username}
-    result_dict['records'] = posts
-    return render(request,'app/home.html',result_dict)
+        result_dict = {'currentuser': username}
+        result_dict['records'] = posts
+        return render(request,'app/home.html',result_dict)
+    else:
+        messages.error(request, 'You have no access to this page')
+        return redirect('home',username=request.user.username)
+
 
 # Create your views here.
 def view(request, id,username):
