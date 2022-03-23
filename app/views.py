@@ -212,6 +212,47 @@ def adminView(request, username):
 
     return render(request,'app/adminView.html',result_dict)
 
+# Editing users for Admin page
+def edit(request, username):
+    """Shows the main page"""
+
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+
+    # fetch the object related to passed id
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+        obj = cursor.fetchone()
+
+    status = ''
+    # save the data from the form
+
+    if request.POST:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        password = request.POST.get('password')
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE users SET first_name = %s, last_name = %s, email = %s, phone_number = %s, password = %s WHERE username = %s"
+                    , [first_name, last_name, email, phone_number, password, username])
+
+            u = User.objects.get(username = username)
+            u.delete()
+            user = User.objects.create_user(username = username, password = password)
+            user.save()
+            
+            status = 'User edited successfully!'
+            cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+            obj = cursor.fetchone()
+
+
+    context["obj"] = obj
+    context["status"] = status
+ 
+    return render(request, "app/edit.html", context)
+
 
 # Create your views here.
 def view(request, id,username):
@@ -238,38 +279,6 @@ def view(request, id,username):
 
     return render(request,'app/view.html',result_dict)
 
-
-# Create your views here.
-def edit(request, username):
-    """Shows the main page"""
-
-    # dictionary for initial data with
-    # field names as keys
-    context ={}
-
-    # fetch the object related to passed id
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
-        obj = cursor.fetchone()
-
-    status = ''
-    # save the data from the form
-
-    if request.POST:
-        ##TODO: date validation
-        with connection.cursor() as cursor:
-            cursor.execute("UPDATE users SET first_name = %s, last_name = %s, email = %s, phone_number = %s, password = %s WHERE username = %s"
-                    , [request.POST['first_name'], request.POST['last_name'], request.POST['email'],
-                        request.POST['phone_number'] , request.POST['password'], username ])
-            status = 'User edited successfully!'
-            cursor.execute("SELECT * FROM users WHERE username = %s", [username])
-            obj = cursor.fetchone()
-
-
-    context["obj"] = obj
-    context["status"] = status
- 
-    return render(request, "app/edit.html", context)
 
 @login_required(login_url = 'login')
 def post(request,username):
