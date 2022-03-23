@@ -134,10 +134,12 @@ def index(request):
                 cursor.execute("DELETE FROM users WHERE username = %s", [username])
 
     ## Delete post            
-    if request.POST:            
+    if request.POST:
+        post_id = request.POST.get('post_id')            
         if request.POST['action'] == 'deletePost':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
+                cursor.execute("DELETE FROM transactions WHERE post_id = %s", [post_id])
+                cursor.execute("DELETE FROM posts WHERE post_id = %s", [post_id])
 
     ## Select all users into the table
     with connection.cursor() as cursor:
