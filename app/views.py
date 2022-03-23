@@ -235,18 +235,39 @@ def edit(request, username):
         phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE users SET first_name = %s, last_name = %s, email = %s, phone_number = %s, password = %s WHERE username = %s"
+
+            try: 
+                ## Updates PostgreSQL database
+                cursor.execute("UPDATE users SET first_name = %s, last_name = %s, email = %s, phone_number = %s, password = %s WHERE username = %s"
                     , [first_name, last_name, email, phone_number, password, username])
+            
+            except Exception as e:
+
+                string = str(e)
+
+                ## Checks for uniqueness of email
+                if 'duplicate key value violates unique constraint "users_email_key"' in string:  
+                    messages.error(request, "This email has been taken. Try again.")
+
+                ## Checks for structure of email
+                elif 'new row for relation "users" violates check constraint "users_email_check"' in string:
+                    messages.error(request, 'Invalid email. Try again.')
+
+                ## Checks for uniqueness of phone number
+                elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
+                    messages.error(request, 'This phone number exists. Try again.')
+
+                return render(request, 'app/edit.html')
 
             u = User.objects.get(username = username)
             u.delete()
             user = User.objects.create_user(username = username, password = password)
             user.save()
-            
+
             status = 'User edited successfully!'
             cursor.execute("SELECT * FROM users WHERE username = %s", [username])
             obj = cursor.fetchone()
-
+            
 
     context["obj"] = obj
     context["status"] = status

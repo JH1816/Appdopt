@@ -18,6 +18,13 @@
         Password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="password" value="{{obj.5}}" maxlength="50" class="textinput textInput" required="" id="id_password"> </div> </div>
 
         <br>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <button type="submit" value="Update">Update</button>
     </form>
 </body>
