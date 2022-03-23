@@ -25,7 +25,7 @@ def login_page(request):
                 
                 if entry[6] == 'user':
                     login(request, user)
-                    return redirect('home',username=username)
+                    return redirect('home',username = username)
                     
                 elif entry[6] == 'admin':
                     login(request, user)
@@ -94,11 +94,30 @@ def register(request):
             user = User.objects.create_user(username = username, password = password)
             user.save()
 
-            messages.success(request, f'Account successfully created!')
+            messages.success(request, 'Account successfully created!')
 
             return redirect('home', username = username)
 
     return render(request, 'app/register.html')
+
+
+# Home page
+@login_required(login_url = 'login')
+def home(request, username):
+    
+    ## Checks if logged in user is the same
+    if request.user.username == username:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM posts ORDER BY post_id")
+            posts = cursor.fetchall()
+
+        result_dict = {'currentuser': username}
+        result_dict['records'] = posts
+        return render(request,'app/home.html', result_dict)
+    else:
+        messages.error(request, 'You have no access to this page')
+        return redirect('home', username = request.user.username)
+
 
 # Create your views here.
 def index(request):
@@ -125,21 +144,6 @@ def index(request):
         posts = cursor.fetchall()
 
     return render(request,'app/index.html',{'records': users, 'listing': posts})
-
-@login_required(login_url = 'login')
-def home(request,username):
-    """Shows the main page"""
-    if request.user.username == username:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM posts ORDER BY post_id")
-            posts = cursor.fetchall()
-
-        result_dict = {'currentuser': username}
-        result_dict['records'] = posts
-        return render(request,'app/home.html',result_dict)
-    else:
-        messages.error(request, 'You have no access to this page')
-        return redirect('home',username=request.user.username)
 
 
 # Create your views here.
