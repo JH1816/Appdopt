@@ -172,6 +172,7 @@ def view(request, id,username):
     return render(request,'app/view.html',result_dict)
 
 # Create your views here.
+
 def add(request):
     context = {}
     status = ''
@@ -229,7 +230,7 @@ def edit(request, username):
  
     return render(request, "app/edit.html", context)
 
-
+@login_required(login_url = 'login')
 def post(request,username):
     """Shows the main page"""
     context = {}
@@ -257,6 +258,7 @@ def post(request,username):
  
     return render(request, "app/post.html", context)
 
+@login_required(login_url = 'login')
 def mypost(request,username):
     """Shows the main page"""
     with connection.cursor() as cursor:
@@ -278,7 +280,8 @@ def latestpost(request,username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts")
         posts = cursor.fetchall()
-    
+
+@login_required(login_url = 'login') 
 def profile(request, username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts WHERE username = %s", [username])
@@ -359,7 +362,7 @@ def postEdit(request, post_id):
  
     return render(request, "app/postEdit.html", context)
 
-
+@login_required(login_url = 'login')
 def userpostEdit(request, post_id,username):
     """Shows the main page"""
 
