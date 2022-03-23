@@ -122,13 +122,15 @@ def home(request, username):
 # Admin index page
 def index(request):
 
-    ## Delete user
+    ## Delete all transactions, all posts as well as the user
     if request.POST:
         username = request.POST.get('username')
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 u = User.objects.get(username = username)
                 u.delete()
+                cursor.execute("DELETE FROM transactions WHERE seller_username = %s OR buyer_username = %s", [username, username])
+                cursor.execute("DELETE FROM posts WHERE username = %s", [username])
                 cursor.execute("DELETE FROM users WHERE username = %s", [username])
 
     ## Delete post            
