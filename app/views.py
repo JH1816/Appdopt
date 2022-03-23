@@ -96,7 +96,7 @@ def register(request):
 
             messages.success(request, 'Account successfully created!')
 
-            return redirect('home', username = username)
+            return redirect('login')
 
     return render(request, 'app/register.html')
 
