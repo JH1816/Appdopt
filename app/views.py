@@ -141,6 +141,14 @@ def index(request):
                 cursor.execute("DELETE FROM transactions WHERE post_id = %s", [post_id])
                 cursor.execute("DELETE FROM posts WHERE post_id = %s", [post_id])
 
+    ## Delete transaction
+    if request.POST:
+        post_id = request.POST.get('post_id')            
+        if request.POST['action'] == 'deleteTransaction':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM transactions WHERE post_id = %s", [post_id])
+                cursor.execute("UPDATE posts SET status = 'AVAILABLE' WHERE post_id = %s", [post_id])
+
     ## Select all users into the table
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users ORDER BY username")
@@ -150,8 +158,13 @@ def index(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts ORDER BY post_id")
         posts = cursor.fetchall()
+    
+    ## Select all transactions into the table
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM transactions ORDER BY date_of_sale")
+        transactions = cursor.fetchall()
 
-    return render(request,'app/index.html',{'records': users, 'listing': posts})
+    return render(request,'app/index.html',{'records': users, 'listing': posts, 'history': transactions})
 
 # Adding users for Admin page
 def addUser(request):

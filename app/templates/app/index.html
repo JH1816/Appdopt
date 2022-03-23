@@ -30,7 +30,7 @@
         {% endfor %}
     </table>
     
-    <table border=1 style="float: left">
+    <table border=1 style="float: left;margin-right:20px">
         <thead>
             <th>Post ID</th>
             <th>Username</th>
@@ -52,6 +52,30 @@
                 {% csrf_token %}
                 <input type="hidden" name="post_id" value="{{post.0}}"/>
                 <button onclick="return confirm('Are you sure you want to delete post {{post.0}}?');" type="submit" name="action" value="deletePost">Delete</button> 
+              </form></td>
+        </tr>
+       {% endfor %}
+    </table>
+
+    <table border=1 style="float: left">
+        <thead>
+            <th>Post ID</th>
+            <th>Seller</th>
+            <th>Buyer</th>
+            <th>Date of Sale</th>
+            
+        </thead>
+        {% for transactions in history %}
+        <tr>
+            <td> {{ transactions.0 }} </td>
+            <td> {{ transactions.2 }} </td>
+            <td> {{ transactions.3 }} </td>
+            <td> {{ transactions.1 }} </td>
+            <td>
+                <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{post.0}}"/>
+                <button onclick="return confirm('Are you sure you want to delete transaction {{transactions.0}}?');" type="submit" name="action" value="deleteTransaction">Delete</button> 
               </form></td>
         </tr>
        {% endfor %}
