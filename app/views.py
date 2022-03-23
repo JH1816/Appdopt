@@ -224,7 +224,8 @@ def edit(request, username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users WHERE username = %s", [username])
         obj = cursor.fetchone()
-
+        
+    context["obj"] = obj
     status = ''
     # save the data from the form
 
