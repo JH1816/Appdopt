@@ -123,29 +123,31 @@ def home(request, username):
 def index(request):
     """Shows the main page"""
 
-    ## Delete customer
+    ## Delete user
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM users WHERE username = %s", [request.POST['username']])
-                
+
+    ## Delete post            
     if request.POST:            
         if request.POST['action'] == 'deletePost':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
 
-    ## Use raw query to get all objects
+    ## Select all users into the table
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM users ORDER BY username")
         users = cursor.fetchall()
     
+    ## Select all posts into the table
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts ORDER BY post_id")
         posts = cursor.fetchall()
 
     return render(request,'app/index.html',{'records': users, 'listing': posts})
 
-# Create your views here.
+# Adding users for Admin page
 def addUser(request):
 
     if request.POST:
@@ -192,6 +194,18 @@ def addUser(request):
             return redirect('add')
 
     return render(request, 'app/add.html')
+
+# Viewing users for Admin page
+def adminView(request, username):
+    
+    ## Selects that specific user
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+        users = cursor.fetchone()
+    result_dict = {'user': users}
+
+    return render(request,'app/adminView.html',result_dict)
+
 
 # Create your views here.
 def view(request, id,username):
@@ -328,16 +342,6 @@ def profile(request, username):
             result_dict[current_action + '_status'] = status
     return render(request,'app/profile.html',result_dict)
  
-def adminView(request, username):
-    """Shows the main page"""
-    
-    ## Use raw query to get a user
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
-        users = cursor.fetchone()
-    result_dict = {'user': users}
-
-    return render(request,'app/adminView.html',result_dict)
 
 def postView(request, post_id):
     """Shows the main page"""
