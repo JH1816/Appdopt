@@ -29,7 +29,7 @@ def login_page(request):
                     
                 elif entry[6] == 'admin':
                     login(request, user)
-                    return redirect('admin')
+                    return redirect('index')
                 
         ## Username and password does not exist in ORM
         else:
