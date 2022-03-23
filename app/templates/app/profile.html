@@ -1,18 +1,6 @@
 {% extends "app/base.html" %}
 {% block content %}
-<legend class="border-bottom mb-4">Posts</legend>
-    {% for post in records %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{{currentuser}}/view/{{post.0}}">{{ post.0 }}</a>
-              <small class="text-muted">{{ post.4 }}</small>
-            </div>
-            <h2><a class="article-title" href="{{currentuser}}/view/{{post.0}}">{{ post.8 }}</a></h2>
-            <p class="article-content">{{ post.7 }}</p>
-          </div>
-        </article>
-    {% endfor %}
+<legend class="border-bottom mb-4">Update profile</legend>
 
     <div class="content-section">
         <form method="POST">
