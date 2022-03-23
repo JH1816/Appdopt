@@ -189,7 +189,7 @@ def addUser(request):
 
             messages.success(request, 'Account successfully created!')
 
-            return redirect('index/add')
+            return redirect('index')
 
     return render(request, 'app/add.html')
 
