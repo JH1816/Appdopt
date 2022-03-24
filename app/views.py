@@ -110,17 +110,33 @@ def register(request):
 
 # Home page
 @login_required(login_url = 'login')
-def home(request, username):        
+def home(request, username):    
+    query_search = request.GET.get("psearch")
+    query_price = request.GET.get("price")
+    if not request.GET.get("gender"):
+            query_gender = ""
+    else:
+        query_gender = "and gender = '"+request.GET.get("gender")+"'"
+
+    if not request.GET.get("age_range"):
+        query_age = ""
+    elif request.GET.get("age_range") == "less than 1":
+        query_age = "and cast(age_of_pet as int) <1"
+    elif request.GET.get("age_range") == "1 to 3":
+        query_age = "and cast(age_of_pet as int) <3 and cast(age_of_pet as int) >=1"
+    elif request.GET.get("age_range") == "3 to 6":
+        query_age = "and cast(age_of_pet as int) <6 and cast(age_of_pet as int) >=3"
+    elif request.GET.get("age_range") == "6 to 10":
+        query_age = "and cast(age_of_pet as int) <10 and cast(age_of_pet as int) >=6"
+    else:
+        query_age = "and cast(age_of_pet as int) >=10"
+
     print(request.GET)
     if request.GET:
-        if request.GET.get("sort_by") == "price_decreasing":
-            with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM posts ORDER BY price DESC")
+        with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM posts WHERE LOWER(description) LIKE LOWER('%%" + query_search + "%%')" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
                 posts = cursor.fetchall()
-        else:
-            with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM posts ORDER BY price ASC")
-                posts = cursor.fetchall()
+                print("dog")
 
         result_dict = {'currentuser': username}
         result_dict['records'] = posts
@@ -128,11 +144,9 @@ def home(request, username):
 
     ## Checks if logged in user is the same
     elif request.user.username == username:
-
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM posts ORDER BY post_id")
+            cursor.execute("SELECT * FROM posts WHERE status='AVAILABLE' ORDER BY post_id")
             posts = cursor.fetchall()
-
         result_dict = {'currentuser': username}
         result_dict['records'] = posts
         return render(request,'app/home.html', result_dict)

@@ -1,9 +1,27 @@
 {% extends "app/base.html" %} {% block content %}
 <form method="GET">
-    <button class="btn btn-outline-info" name="sort_by" value="price_decreasing" type="submit">
-      Sort by Price Decreasing</button>
-    <button class="btn btn-outline-info" name="sort_by" value="price_increasing" type="submit">
-        Sort by Price Increasing</button>
+    <label for="psearch"> Search Posts: </label>
+    <input type="search" id="psearch" name="psearch" placeholder="Search">
+    <br>
+    <select id="price" class="form-control" name="price">
+      <option selected="selected" value="ASC" >Price</option>
+      <option value="DESC"> Decreasing </option>
+      <option value="ASC"> Increasing </option>
+    </select>
+    <select id="age_range" class="form-control" name="age_range">
+      <option selected="selected" value="" >Age range</option>
+      <option value="less than 1"> &le; 1 Year </option>
+      <option value="1 to 3"> 1 Year - 3 Years </option>
+      <option value="3 to 6"> 3 Year - 6 Years </option>
+      <option value="6 to 10"> 6 Year - 10 Years </option>
+      <option value="more than 10"> &ge; 10 Years </option>
+    </select>
+    <select id="gender" class="form-control" name="gender">
+      <option selected="selected" value="" >Gender</option>
+      <option value="Female"> Female </option>
+      <option value="Male"> Male </option>
+    </select>
+    <button type="submit" class="btn btn-outline-info">Search</button>
 
 </form>
 
