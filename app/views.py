@@ -400,12 +400,6 @@ def mypost(request,username):
     return render(request,'app/mypost.html',result_dict)
 
 
-def latestpost(request,username):
-    """Shows the main page"""
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM posts")
-        posts = cursor.fetchall()
-
 @login_required(login_url = 'login') 
 def profile(request, username):
     with connection.cursor() as cursor:
@@ -466,3 +460,39 @@ def userpostEdit(request, post_id,username):
     context["currentuser"]=username
  
     return render(request, "app/userpostEdit.html", context)
+
+
+def search(request,username):
+    status = ''
+    result_dict ={}
+    result_dict ['currentuser']=username
+
+    if request.POST:
+        
+        with connection.cursor() as cursor:
+            cursor.execute(
+            """
+            SELECT * 
+            FROM posts
+            WHERE pet = %s 
+            AND breed = %s 
+            AND age_of_pet =%s 
+            AND price BETWEEN %s AND %s
+            AND gender = %s 
+            ORDER BY date_of_post""",
+            [
+                request.POST['pet'],
+                request.POST['breed'],
+                request.POST['age_of_pet'],
+                request.POST['min_price'],
+                request.POST['max_price'],
+                request.POST['gender'],
+                    
+            ])                
+            posts = cursor.fetchall()
+
+        result_dict['records']= posts
+
+        return render(request,'app/home.html', result_dict)
+        
+    return render(request,'app/search.html', result_dict)
