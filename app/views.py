@@ -7,6 +7,13 @@ from django.contrib.auth.decorators import login_required
 
 # Login page
 def login_page(request):
+
+    # with connection.cursor() as cursor:
+    #     cursor.execute("SELECT * FROM users")
+    #     users = cursor.fetchall()
+    # for user in users:
+    #     user_temp = User.objects.create_user(user[3], password = user[5])
+    #     user_temp.save()
     
     if request.POST:
         username = request.POST['username']
@@ -103,10 +110,25 @@ def register(request):
 
 # Home page
 @login_required(login_url = 'login')
-def home(request, username):
-    
+def home(request, username):        
+    print(request.GET)
+    if request.GET:
+        if request.GET.get("sort_by") == "price_decreasing":
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM posts ORDER BY price DESC")
+                posts = cursor.fetchall()
+        else:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM posts ORDER BY price ASC")
+                posts = cursor.fetchall()
+
+        result_dict = {'currentuser': username}
+        result_dict['records'] = posts
+        return render(request,'app/home.html', result_dict)
+
     ## Checks if logged in user is the same
-    if request.user.username == username:
+    elif request.user.username == username:
+
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM posts ORDER BY post_id")
             posts = cursor.fetchall()
@@ -118,6 +140,7 @@ def home(request, username):
         messages.error(request, 'You have no access to this page')
         return redirect('home', username = request.user.username)
 
+   
 
 # Admin index page
 def index(request):

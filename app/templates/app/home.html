@@ -1,16 +1,21 @@
-{% extends "app/base.html" %}
-{% block content %}
-    {% for post in records %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{{currentuser}}/view/{{post.0}}">{{ post.0 }}</a>
-              <small class="text-muted">{{ post.4 }}</small>
-            </div>
-            <h2><a class="article-title" href="{{currentuser}}/view/{{post.0}}">{{ post.8 }}</a></h2>
-            <p class="article-content">{{ post.7 }}</p>
-          </div>
-        </article>
-    {% endfor %}
-{% endblock content %}
+{% extends "app/base.html" %} {% block content %}
+<form method="GET">
+    <button class="btn btn-outline-info" name="sort_by" value="price_decreasing" type="submit">
+      Sort by Price Decreasing</button>
+    <button class="btn btn-outline-info" name="sort_by" value="price_increasing" type="submit">
+        Sort by Price Increasing</button>
 
+</form>
+
+{% for post in records %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{{currentuser}}/view/{{post.0}}">{{ post.0 }}</a>
+            <small class="text-muted">{{ post.4 }}</small>
+        </div>
+        <h2><a class="article-title" href="{{currentuser}}/view/{{post.0}}">{{ post.8 }}</a></h2>
+        <p class="article-content">{{ post.7 }}</p>
+    </div>
+</article>
+{% endfor %} {% endblock content %}
