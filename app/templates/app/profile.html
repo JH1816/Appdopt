@@ -1,55 +1,68 @@
 {% extends "app/base.html" %}
 {% block content %}
-<legend class="border-bottom mb-4">Update profile</legend>
+<main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
+          {% if messages%}
+              {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+            <legend class="border-bottom mb-4">Update profile</legend>
+                <div class="content-section">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Change Email</legend>
+                            <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
+                                Old email<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="old_email" maxlength="64" class="textinput textInput" required="" id="id_old_email"> </div> </div> <div id="id_old_email" class="control-group"> <label for="id_old_email" class="control-label requiredField">
+                                New email<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="new_email" maxlength="64" class="textinput textInput" required="" id="id_new_email"> </div> </div> <div id="div_id_new_email" class="control-group"> <label for="id_new_email" class="control-label requiredField">
+                                <br>
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="POST" value="email" name="action">Change email</button>
+                        </div>
+                    </form>
+                    <p style="color:red">{{ email_status }}</p>
+                </div>
 
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Change Email</legend>
-                <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
-                    Old email<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="old_email" maxlength="64" class="textinput textInput" required="" id="id_old_email"> </div> </div> <div id="id_old_email" class="control-group"> <label for="id_old_email" class="control-label requiredField">
-                    New email<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="new_email" maxlength="64" class="textinput textInput" required="" id="id_new_email"> </div> </div> <div id="div_id_new_email" class="control-group"> <label for="id_new_email" class="control-label requiredField">
-                    <br>
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="POST" value="email" name="action">Change email</button>
-            </div>
-        </form>
-        <p style="color:red">{{ email_status }}</p>
-    </div>
+                <div class="content-section">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Change Password</legend>
+                            <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
+                                Old password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="old_password" maxlength="64" class="textinput textInput" required="" id="id_old_password"> </div> </div> <div id="id_old_email" class="control-group"> <label for="id_old_password" class="control-label requiredField">
+                                New password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="new_password" maxlength="64" class="textinput textInput" required="" id="id_new_password"> </div> </div> <div id="div_id_new_password" class="control-group"> <label for="id_new_password" class="control-label requiredField">
+                                <br>
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="POST" value="password" name="action">Change password</button>
+                        </div>
+                    </form>
+                    <p style="color:red">{{ password_status }}</p>
+                </div>
 
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Change Password</legend>
-                <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
-                    Old password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="old_password" maxlength="64" class="textinput textInput" required="" id="id_old_password"> </div> </div> <div id="id_old_email" class="control-group"> <label for="id_old_password" class="control-label requiredField">
-                    New password<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="new_password" maxlength="64" class="textinput textInput" required="" id="id_new_password"> </div> </div> <div id="div_id_new_password" class="control-group"> <label for="id_new_password" class="control-label requiredField">
-                    <br>
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="POST" value="password" name="action">Change password</button>
+                <div class="content-section">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">Change Phone Number</legend>
+                            <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
+                                Old phone number<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="old_phone_number" maxlength="64" class="textinput textInput" required="" id="id_old_phone_number"> </div> </div> <div id="id_old_email" class="control-group"> <label for="id_old_phone_number" class="control-label requiredField">
+                                New phone number<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="new_phone_number" maxlength="64" class="textinput textInput" required="" id="id_new_phone_number"> </div> </div> <div id="div_id_new_phone_number" class="control-group"> <label for="id_new_phone_number" class="control-label requiredField">
+                                <br>
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="POST" value="phone_number" name="action">Change phone number</button>
+                        </div>
+                    </form>
+                    <p style="color:red">{{ phone_number_status }}</p>
             </div>
-        </form>
-        <p style="color:red">{{ password_status }}</p>
+        </div>
     </div>
+</main>
 
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Change Phone Number</legend>
-                <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
-                    Old phone number<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="old_phone_number" maxlength="64" class="textinput textInput" required="" id="id_old_phone_number"> </div> </div> <div id="id_old_email" class="control-group"> <label for="id_old_phone_number" class="control-label requiredField">
-                    New phone number<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="new_phone_number" maxlength="64" class="textinput textInput" required="" id="id_new_phone_number"> </div> </div> <div id="div_id_new_phone_number" class="control-group"> <label for="id_new_phone_number" class="control-label requiredField">
-                    <br>
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="POST" value="phone_number" name="action">Change phone number</button>
-            </div>
-        </form>
-        <p style="color:red">{{ phone_number_status }}</p>
-    </div>
 {% endblock content %}

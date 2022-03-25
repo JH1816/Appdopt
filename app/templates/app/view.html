@@ -1,32 +1,45 @@
 {% extends "app/base.html" %}
 {% block content %}
-  <article class="media content-section">
-    <div class="media-body">
-      <div class="article-metadata">
-        <a class="mr-2" href="#">{{ cust.1 }}</a>
-        <small class="text-muted">{{ cust.4|date:"F d, Y" }}</small>
-        {% if cust.1 == currentuser %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userpostEdit' post_id=cust.0 username=cust.1%}">Edit post</a>
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+      {% if messages%}
+          {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+      <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ cust.1 }}</a>
+            <small class="text-muted">{{ cust.4|date:"F d, Y" }}</small>
+            {% if cust.1 == currentuser %}
+              <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userpostEdit' post_id=cust.0 username=cust.1%}">Edit post</a>
+              </div>
+            {% endif %}
           </div>
-        {% endif %}
-      </div>
-      <h2 class="Title">{{ cust.8 }}</h2>
-      <p class="article-content">
-        Pet: {{ cust.2 }}
-        Breed: {{ cust.3 }}
-        Age: {{ cust.5 }}
-        Price: {{ cust.6 }}
-        Gender: {{ cust.10 }}
-        Description: {{ cust.7 }}
-        Status: {{ cust.9 }}
-      </p>
-      <form method="POST" style="display: inline;">
-          {% csrf_token %}
-           <input type="hidden" name="seller" value={{ cust.1 }}/>
-           <button onclick="return {{ status }}" type="submit" name="action" value="BUY">BUY</button> 
-      </form>
-      <p style="color:red">{{ status }}</p>
+          <h2 class="Title">{{ cust.8 }}</h2>
+          <p class="article-content">
+            Pet: {{ cust.2 }}
+            Breed: {{ cust.3 }}
+            Age: {{ cust.5 }}
+            Price: {{ cust.6 }}
+            Gender: {{ cust.10 }}
+            Description: {{ cust.7 }}
+            Status: {{ cust.9 }}
+          </p>
+          <form method="POST" style="display: inline;">
+              {% csrf_token %}
+              <input type="hidden" name="seller" value={{ cust.1 }}/>
+              <button onclick="return {{ status }}" type="submit" name="action" value="BUY">BUY</button> 
+          </form>
+          <p style="color:red">{{ status }}</p>
+        </div>
+      </article>
     </div>
-  </article>
+  </div>
+</main>
 {% endblock content %}

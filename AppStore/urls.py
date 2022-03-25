@@ -34,7 +34,6 @@ urlpatterns = [
     path('<str:username>/post', app.views.post, name='post'),
     path('<str:username>/profile', app.views.profile, name='profile'),
     path('<str:username>/mypost', app.views.mypost, name='mypost'),
-    path('<str:username>/search', app.views.search, name='search'),
     path('<str:username>/userpostEdit/<int:post_id>', app.views.userpostEdit, name = 'userpostEdit'),
     path('<str:username>', app.views.home, name='home'),
 ]

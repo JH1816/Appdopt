@@ -28,14 +28,12 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'home' currentuser %}">Home</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="{% url 'mypost' currentuser %}">My Post</a>
               <a class="nav-item nav-link" href="{% url 'post' currentuser %}">Post</a>
               <a class="nav-item nav-link" href="{% url 'profile' currentuser %}">Update Profile</a>
-              <a class="nav-item nav-link" href="{% url 'search' currentuser %}">Search</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             </div>
             </div>
@@ -43,59 +41,7 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-            {% if messages%}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Welcome {{ currentuser }}</h3>
-            <p class='text-muted'>Appdopt a place to find your ideal pet
-              <ul class="list-group">
-                <form method="GET">
-                    <label for="psearch"> Search Posts: </label>
-                      <input type="search" id="psearch" name="psearch" placeholder="Search">
-
-                        <li class="list-group" style = "margin-top:10px">
-                          <select id="price" class="form-control" name="price">
-                            <option selected="selected" value="ASC" >Price</option>
-                            <option value="DESC"> Decreasing </option>
-                            <option value="ASC"> Increasing </option>
-                          </select>
-                        </li>
-                        <li class="list-group" style = "margin-top:10px">
-                          <select id="age_range" class="form-control" name="age_range">
-                            <option selected="selected" value="" >Age range</option>
-                            <option value="less than 1"> &le; 1 Year </option>
-                            <option value="1 to 3"> 1 Year - 3 Years </option>
-                            <option value="3 to 6"> 3 Year - 6 Years </option>
-                            <option value="6 to 10"> 6 Year - 10 Years </option>
-                            <option value="more than 10"> &ge; 10 Years </option>
-                          </select>
-                        </li>
-                        <li class="list-group" style = "margin-top:10px">
-                          <select id="gender" class="form-control" name="gender">
-                            <option selected="selected" value="" >Gender</option>
-                            <option value="Female"> Female </option>
-                            <option value="Male"> Male </option>
-                          </select>
-                        </li>
-                      <button style = "margin-top:15px" type="submit" class="btn btn-outline-info">Search</button>
-                </form>
-              </ul>
-            </p>
-          </div>
-        </div>
-      </div>
-    </main>
+    {% block content %}{% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
