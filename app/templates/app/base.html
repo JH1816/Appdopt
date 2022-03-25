@@ -60,10 +60,36 @@
             <h3>Welcome {{ currentuser }}</h3>
             <p class='text-muted'>Appdopt a place to find your ideal pet
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
+                <form method="GET">
+                    <label for="psearch"> Search Posts: </label>
+                      <input type="search" id="psearch" name="psearch" placeholder="Search">
+
+                        <li class="list-group" style = "margin-top:10px">
+                          <select id="price" class="form-control" name="price">
+                            <option selected="selected" value="ASC" >Price</option>
+                            <option value="DESC"> Decreasing </option>
+                            <option value="ASC"> Increasing </option>
+                          </select>
+                        </li>
+                        <li class="list-group" style = "margin-top:10px">
+                          <select id="age_range" class="form-control" name="age_range">
+                            <option selected="selected" value="" >Age range</option>
+                            <option value="less than 1"> &le; 1 Year </option>
+                            <option value="1 to 3"> 1 Year - 3 Years </option>
+                            <option value="3 to 6"> 3 Year - 6 Years </option>
+                            <option value="6 to 10"> 6 Year - 10 Years </option>
+                            <option value="more than 10"> &ge; 10 Years </option>
+                          </select>
+                        </li>
+                        <li class="list-group" style = "margin-top:10px">
+                          <select id="gender" class="form-control" name="gender">
+                            <option selected="selected" value="" >Gender</option>
+                            <option value="Female"> Female </option>
+                            <option value="Male"> Male </option>
+                          </select>
+                        </li>
+                      <button style = "margin-top:15px" type="submit" class="btn btn-outline-info">Search</button>
+                </form>
               </ul>
             </p>
           </div>
