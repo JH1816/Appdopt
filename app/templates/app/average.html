@@ -1,0 +1,31 @@
+{% extends "app/base.html" %}
+{% block content %}
+<main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
+          {% if messages%}
+              {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+          <table border=1 style = "float: left;margin-right:20px">
+            <thead>
+                <th>Pet</th>
+                <th>Breed</th>
+                <th>Average price</th>
+                
+            </thead>
+            {% for breed in breeds %}
+            <tr>
+                <td> {{ breed.0 }} </td>
+                <td> {{ breed.1 }} </td>
+                <td> {{ breed.2 }} </td>
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+  </main>  
+{% endblock content %}
+

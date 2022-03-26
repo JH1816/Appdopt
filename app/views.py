@@ -497,3 +497,19 @@ def userpostEdit(request, post_id,username):
     context["currentuser"]=username
  
     return render(request, "app/userpostEdit.html", context)
+
+@login_required(login_url = 'login')
+def average(request,username):
+    """Shows the main page"""
+    with connection.cursor() as cursor:
+        cursor.execute('''
+        select pet,breed,Round(avg(price),2) from posts
+        group by(pet,breed)
+        order by pet''')
+        breeds = cursor.fetchall()
+
+
+    result_dict = {'currentuser': username}
+    result_dict['breeds'] = breeds
+
+    return render(request,'app/average.html',result_dict)
