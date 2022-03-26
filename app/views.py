@@ -374,15 +374,16 @@ def view(request, id,username):
     if request.POST:
         if request.POST['action'] == 'BUY':
             with connection.cursor() as cursor:
-                    cursor.execute("SELECT status FROM posts WHERE  post_id= %s ", [id])
-                    post = cursor.fetchone()[0]
-                    if post == 'AVAILABLE':
+                    cursor.execute("SELECT * FROM posts WHERE  post_id= %s", [id])
+                    post = cursor.fetchone()
+                    if post[9] == 'AVAILABLE' and post[1] != username:
                         cursor.execute("UPDATE posts SET status = 'NOT AVAILABLE' WHERE post_id = %s", [id])
                         cursor.execute("INSERT INTO  transactions VALUES (%s ,now(),%s,%s)",[ id,request.POST['seller'][:-1],username])
                         messages.success(request, "An order has been submitted. Please check 'My Purchases' to contact the seller.")
                         return redirect('home', username = request.user.username)
                     else:
-                        messages.error(request, 'This post is not available')
+                        messages.error(request, "You cannot buy your own pet")
+                        return redirect('home', username = request.user.username)
 
     result_dict = {'cust': post}
     result_dict['currentuser']=username
