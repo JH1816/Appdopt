@@ -136,7 +136,6 @@ def home(request, username):
         with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM posts WHERE LOWER(description) LIKE LOWER('%%" + query_search + "%%')" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
                 posts = cursor.fetchall()
-                print("dog")
 
         result_dict = {'currentuser': username}
         result_dict['records'] = posts
@@ -382,7 +381,7 @@ def view(request, id,username):
                 if post == 'AVAILABLE':
                     cursor.execute("UPDATE posts SET status = 'NOT AVAILABLE' WHERE post_id = %s", [id])
                     cursor.execute("INSERT INTO  transactions VALUES (%s ,now(),%s,%s)",[ id,request.POST['seller'][:-1],username])
-                    status = 'Pet with post_id %s has been succesfully brought' % (id)
+                    status = 'Pet with post_id %s has been succesfully bought' % (id)
                 else:
                     status = 'Pet with post_id %s is not available' % (id)
     result_dict = {'cust': post}
@@ -394,28 +393,24 @@ def view(request, id,username):
 
 @login_required(login_url = 'login')
 def post(request,username):
-    """Shows the main page"""
     context = {}
-    status = ''
 
     if request.POST:
-        ## Check if username is already in the table
+        pet = request.POST.get('pet')
+        breed = request.POST.get('breed')
+        age_of_pet = request.POST.get('age_of_pet')
+        price = request.POST.get('price')
+        description = request.POST.get('description')
+        title = request.POST.get('title')
+        gender = request.POST.get('gender')
         with connection.cursor() as cursor:
-
-            cursor.execute("SELECT * FROM posts WHERE  post_id= %s ", [request.POST['post_id']])
+            cursor.execute("SELECT MAX(post_id)+1 FROM posts")
             post = cursor.fetchone()
-            ## No post with same id
-            if post == None:
-                cursor.execute("INSERT INTO posts VALUES (%s, %s, %s, %s, now(), %s,%s,%s,%s,'AVAILABLE',%s)"
-                        , [request.POST['post_id'], username,request.POST['pet'], request.POST['breed']
-                        , request.POST['age_of_pet'], request.POST['price'],
-                           request.POST['description'],request.POST['title'],request.POST['gender']])
-                status = 'Post with post_id %s has been succesfully posted' % (request.POST['post_id'])
-            else:
-                status = 'Post with post_id %s  already exists' % (request.POST['post_id'])
+            
+            cursor.execute("INSERT INTO posts VALUES (%s, %s, %s, %s, now(), %s,%s,%s,%s,'AVAILABLE',%s)"
+                    , [post, username, pet, breed, age_of_pet, price, description, title, gender])
+            messages.success(request, 'Post created!')
 
-
-    context['status'] = status
     context['currentuser'] = username
  
     return render(request, "app/post.html", context)
