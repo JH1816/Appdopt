@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users(
 	last_name VARCHAR(64) NOT NULL,
 	email VARCHAR(128) UNIQUE NOT NULL CHECK (email LIKE '_%@_%._%'),
 	username VARCHAR(50) PRIMARY KEY,
-	phone_number VARCHAR(16) UNIQUE NOT NULL,
+	phone_number INT UNIQUE NOT NULL CHECK ((phone_number BETWEEN 80000000 AND 89999999) OR (phone_number BETWEEN 90000000 AND 99999999)),
 	password VARCHAR(50) NOT NULL,
 	type VARCHAR NOT NULL DEFAULT 'user' CHECK(type = 'user' OR type = 'admin'),
 	total_number_of_rating integer NOT NULL CHECK (total_number_of_rating>=0),
