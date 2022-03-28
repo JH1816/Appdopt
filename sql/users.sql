@@ -59,7 +59,7 @@ insert into users (first_name, last_name, email, username, phone_number, passwor
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Ashleigh', 'Osinin', 'aosinin1l@cbc.ca', 'aosinin1l', 94036429, 'VWiQr27');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Taddeusz', 'Caddens', 'tcaddens1m@cnn.com', 'tcaddens1m', 87893061, 'I4Ic3hQ');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Vassili', 'Liddyard', 'vliddyard1n@dagondesign.com', 'vliddyard1n', 82622989, 'hbPjPIiYY');
-insert into users (first_name, last_name, email, username, phone_number, password) values ('Annabella', 'D'Agostino', 'adagostino1o@blogtalkradio.com', 'adagostino1o', 90908614, 'Y0CPfWZ8');
+insert into users (first_name, last_name, email, username, phone_number, password) values ('Annabella', 'D''Agostino', 'adagostino1o@blogtalkradio.com', 'adagostino1o', 90908614, 'Y0CPfWZ8');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Katusha', 'Knoles', 'kknoles1p@nifty.com', 'kknoles1p', 82127950, 'uT5gPr');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Inga', 'Callender', 'icallender1q@arstechnica.com', 'icallender1q', 93800013, 'XGGI1MR');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Titus', 'Goldis', 'tgoldis1r@bloomberg.com', 'tgoldis1r', 83708173, '8CFOZag');
