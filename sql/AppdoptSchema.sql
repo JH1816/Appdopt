@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS posts(
 	title VARCHAR(128) NOT NULL,
 	status VARCHAR(50) DEFAULT 'AVAILABLE',
 	gender VARCHAR(6),
-	location varchar(1200) NOT NULL,
+	location VARCHAR(64) NOT NULL,
 	FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 	);
   
@@ -32,6 +32,5 @@ CREATE TABLE transactions(
 	seller_username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
 	buyer_username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY (post_id, seller_username, buyer_username),
-	FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	rating integer
+	FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
