@@ -438,12 +438,17 @@ def mypost(request,username):
 
 @login_required(login_url = 'login') 
 def profile(request, username):
+    
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts WHERE username = %s", [username])
         posts = cursor.fetchall()
-
+        cursor.execute("SELECT * FROM ratings WHERE username = %s", [username])
+        users = cursor.fetchone()
+    
+    
     result_dict = {'currentuser': username}
     result_dict['records'] = posts
+    result_dict['users'] = users
     status = ''
     
 
@@ -460,7 +465,7 @@ def profile(request, username):
             else:
                 status = current_action + 'of profile with username %s failed to change %s' % (username, current_action)
 
-
+            
             result_dict[current_action + '_status'] = status
     return render(request,'app/profile.html',result_dict)
 

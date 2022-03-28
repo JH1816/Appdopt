@@ -10,7 +10,38 @@
                   </div>
               {% endfor %}
           {% endif %}
-            <legend class="border-bottom mb-4">Update profile</legend>
+            <legend class="border-bottom mb-4">Profile</legend>
+            
+            <a href="{% url 'mypost' currentuser %}">
+                <button class ="button button-blue button-bordered" style = "margin-bottom: 20px;">
+                    <span class="button--inner">My Posts</span>
+                </button>
+            </a>
+
+                <div class="content-section">
+                    <table style='text-align:left'>
+                        <tr>
+                            <th>Username</th>
+                            <td>:</td>
+                            <td> {{ users.3 }} </td>
+                        </tr>
+                        <tr>
+                            <th>First Name</th>
+                            <td>:</td>
+                            <td> {{ users.0 }} </td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td>:</td>
+                            <td> {{ users.1 }} </td>
+                        </tr>
+                        <tr>
+                            <th>Rating</th>
+                            <td>:</td>
+                            <td> {{ users.7 }} </td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="content-section">
                     <form method="POST">
                         {% csrf_token %}
