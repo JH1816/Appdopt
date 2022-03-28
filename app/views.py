@@ -95,6 +95,9 @@ def register(request):
                 elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
                     messages.error(request, 'This phone number exists. Try again.')
 
+                elif 'new row for relation "users" violates check constraint "users_phone_number_check"' in string:
+                    messages.error(request, 'Invalid phone number. Try again.')
+
                 return render(request, 'app/register.html')
             
             ## Registers into the ORM
@@ -134,7 +137,7 @@ def home(request, username):
     print(request.GET)
     if request.GET:
         with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM posts WHERE LOWER(description) LIKE LOWER('%%" + query_search + "%%')" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
+                cursor.execute("SELECT * FROM posts WHERE (LOWER(description) LIKE LOWER('%%" + query_search + "%%') OR LOWER(location) LIKE LOWER('%%" + query_search + "%%') OR LOWER(username) LIKE LOWER('%%" + query_search + "%%') OR LOWER(title) LIKE LOWER('%%" + query_search + "%%'))" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
                 posts = cursor.fetchall()
 
         result_dict = {'currentuser': username}
@@ -403,12 +406,13 @@ def post(request,username):
         description = request.POST.get('description')
         title = request.POST.get('title')
         gender = request.POST.get('gender')
+        location = request.POST.get('location')
         with connection.cursor() as cursor:
             cursor.execute("SELECT MAX(post_id)+1 FROM posts")
             post = cursor.fetchone()
             
-            cursor.execute("INSERT INTO posts VALUES (%s, %s, %s, %s, now(), %s,%s,%s,%s,'AVAILABLE',%s)"
-                    , [post, username, pet, breed, age_of_pet, price, description, title, gender])
+            cursor.execute("INSERT INTO posts VALUES (%s, %s, %s, %s, now(), %s,%s,%s,%s,'AVAILABLE',%s, %s)"
+                    , [post, username, pet, breed, age_of_pet, price, description, title, gender, location])
             messages.success(request, 'Post created!')
 
     context['currentuser'] = username
@@ -479,9 +483,9 @@ def userpostEdit(request, post_id,username):
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE posts SET pet = %s, breed = %s, date_of_post = %s, age_of_pet = %s, price = %s, description = %s, title = %s, status = %s, gender = %s WHERE post_id = %s"
-                    , [request.POST['pet'], request.POST['breed'], request.POST['date_of_post'],
-                        request.POST['age_of_pet'] , request.POST['price'], request.POST['description'], request.POST['title'], request.POST['status'], request.POST['gender'], post_id ])
+            cursor.execute("UPDATE posts SET pet = %s, breed = %s, age_of_pet = %s, price = %s, description = %s, title = %s, status = %s, gender = %s, location = %s WHERE post_id = %s"
+                    , [request.POST['pet'], request.POST['breed'],
+                        request.POST['age_of_pet'] , request.POST['price'], request.POST['description'], request.POST['title'], request.POST['status'], request.POST['gender'], request.POST['location'], post_id ])
             status = 'Post edited successfully!'
             cursor.execute("SELECT * FROM posts WHERE post_id = %s", [post_id])
             obj = cursor.fetchone()

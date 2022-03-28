@@ -25,13 +25,14 @@
                             </select></div></div><div label for="id_breed" class="control-label requiredField">
                             Breed<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="breed" maxlength="64" placeholder="Golden Retriever" class="textinput textInput" required="" id="id_breed"> </div> </div> <div id="div_id_breed" class="control-group"> <label for="id_dob" class="control-label requiredField">
                             Age of Pet (between 0 and 10)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="number" name="age_of_pet" min = "0" max = "10" value = "0" id="id_age_of_pet"> </div> </div> <div id="div_id_age_of_pet" class="control-group"> <label for="id_page_of_pet" class="control-label requiredField">
-                            Price (in SGD)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="number" name="price" min = "0" max = "99999" value = "0" required="" id="id_price"> </div> </div> <div id="div_id_price" class="control-group"> <label for="id_price" class="control-label requiredField">
+                            Price (in SGD)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="number" name="price" min = "0" max = "99999" value = "0.00" step = "0.01" required="" id="id_price"> </div> </div> <div id="div_id_price" class="control-group"> <label for="id_price" class="control-label requiredField">
                             Description<span class="asteriskField">*</span> </label> <div class="controls"> <input style="width: 500px;font-size: 14px" type="text" name="description" maxlength="256" class="textinput textInput" required="" id="id_description"> </div> </div> <div id="div_id_description" class="control-group"> <label for="id_description" class="control-label requiredField"></label>
                             Title<span class="asteriskField">*</span> </label> <div class="controls"> <input style="width: 500px;" type="text" name="title" maxlength="256" class="textinput textInput" required="" id="id_title" placeholder = "Selling a Golden Retriever!"> </div> </div> <div id="div_id_title" class="control-group"> <label for="id_title" class="control-label requiredField"></label>
                             Gender<span class="asteriskField">*</span> </label> <div> <select name="gender" id="gender" class = "form-control">
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
-                            </select></div></div> <div id="div_id_gender" class="control-group"> <label for="id_gender" class="control-label requiredField"></label>
+                            </select></div></div> <div id="div_id_gender" class="control-group"> <label for="id_gender" class="control-label requiredField">
+                            Preferred location<span class="asteriskField">*</span></label><div class="controls"> <input type="text" name="location" maxlength="64" placeholder="Dhoby Ghaut" class="textinput textInput" required="" id="id_location"> </div> </div> <div id="div_id_location" class="control-group"> </div>
                             <br>
                     </fieldset>
                     <div class="form-group">
