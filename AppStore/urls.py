@@ -37,4 +37,5 @@ urlpatterns = [
     path('<str:username>/average', app.views.average, name='average'),
     path('<str:username>/userpostEdit/<int:post_id>', app.views.userpostEdit, name = 'userpostEdit'),
     path('<str:username>', app.views.home, name='home'),
+    path('<str:username>/orders', app.views.orders, name='orders'),
 ]

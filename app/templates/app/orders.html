@@ -1,0 +1,34 @@
+{% extends "app/base.html" %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+        {% if messages%}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% for post in records %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <a class="mr-2" href="{% url 'view' username=currentuser  id=post.0 %}">{{ post.0 }}</a>
+                  <small class="text-muted">{{ post.4 }}</small>
+                </div>
+                <h2><a class="article-title" href="{% url 'view' username=currentuser  id=post.0 %}">{{ post.8 }}</a></h2>
+                <p class="article-content">{{ post.7 }}</p>
+              </div>
+              <td>
+                <form method="POST" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="post_id" value="{{post.0}}"/>
+                  <button onclick="return confirm('Are you sure you want to cancel transaction?');" type="submit" name="action" value="Cancel">Cancel</button> 
+                </form></td>
+            </article>
+        {% endfor %}
+    </div>
+  </div>
+</main>  
+{% endblock content %}
