@@ -441,13 +441,14 @@ def profile(request, username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts WHERE username = %s", [username])
         posts = cursor.fetchall()
-        cursor.execute("SELECT * FROM ratings WHERE username = %s", [username])
+        cursor.execute("SELECT * from get_rating(%s)", [username])
         users = cursor.fetchone()
     
     
     result_dict = {'currentuser': username}
     result_dict['records'] = posts
     result_dict['users'] = users
+
     status = ''
     
 
