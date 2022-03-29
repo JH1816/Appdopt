@@ -257,7 +257,7 @@ def adminView(request, username):
     
     ## Selects that specific user
     with connection.cursor() as cursor:
-        cursor.execute("select * from get_rating(%s)", [username])
+        cursor.execute("SELECT * from users WHERE username = %s", [username])
         users = cursor.fetchone()
     result_dict = {'user': users}
 
