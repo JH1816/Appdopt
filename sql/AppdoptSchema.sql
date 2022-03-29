@@ -6,8 +6,7 @@ CREATE TABLE IF NOT EXISTS users(
 	phone_number INTEGER UNIQUE NOT NULL CHECK (phone_number BETWEEN 80000000 AND 99999999),
 	password VARCHAR(50) NOT NULL,
 	type VARCHAR NOT NULL DEFAULT 'user' CHECK(type = 'user' OR type = 'admin'),
-	total_number_of_rating INTEGER NOT NULL DEFAULT(0) CHECK (total_number_of_rating>=0),
-	sum_of_ratings INTEGER NOT NULL DEFAULT(0) CHECK (sum_of_ratings>=0)
+	rating INTEGER NOT NULL DEFAULT(0) CHECK (rating>=0)
 );
 	
 CREATE TABLE IF NOT EXISTS posts(
@@ -32,6 +31,13 @@ CREATE TABLE transactions(
 	seller_username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
 	buyer_username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
 	stat VARCHAR(16) DEFAULT 'Pending',
+	ratings INTEGER DEFAULT NULL,
 	PRIMARY KEY (post_id, seller_username, buyer_username),
 	FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE ratings(
+	username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
+	total_rating INTEGER NOT NULL,
+	counts INTEGER NOT NULL
+)

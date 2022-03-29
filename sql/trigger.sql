@@ -1,0 +1,4 @@
+CREATE TRIGGER rating_system
+AFTER UPDATE ON ratings
+FOR EACH ROW
+EXECUTE PROCEDURE change_ratings()

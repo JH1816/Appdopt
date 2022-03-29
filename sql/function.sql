@@ -1,3 +1,19 @@
+CREATE OR REPLACE FUNCTION change_ratings()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL
+AS
+$$
+BEGIN
+  IF NEW.counts <> OLD.counts THEN
+	UPDATE users
+	SET rating = NEW.total_rating/NEW.counts
+	WHERE username = NEW.username;
+	END IF;
+  
+  RETURN NEW;
+END;
+$$;
+
 CREATE OR REPLACE FUNCTION get_rating(user_name varchar)  
 	RETURNS TABLE( 
     first_name VARCHAR(64),
