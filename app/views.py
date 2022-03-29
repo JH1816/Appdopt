@@ -441,7 +441,7 @@ def profile(request, username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts WHERE username = %s", [username])
         posts = cursor.fetchall()
-        cursor.execute("SELECT * from get_rating(%s)", [username])
+        cursor.execute("SELECT * from ratings WHERE username = %s", [username])
         users = cursor.fetchone()
     
     

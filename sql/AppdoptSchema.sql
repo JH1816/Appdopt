@@ -38,6 +38,6 @@ CREATE TABLE transactions(
 
 CREATE TABLE ratings(
 	username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
-	total_rating INTEGER NOT NULL,
-	counts INTEGER NOT NULL
+	total_rating INTEGER NOT NULL DEFAULT(0) CHECK (total_rating>=0),
+	counts INTEGER NOT NULL DEFAULT(0) CHECK (counts>=0)
 )
