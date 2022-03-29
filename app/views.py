@@ -257,7 +257,7 @@ def adminView(request, username):
     
     ## Selects that specific user
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM users WHERE username = %s", [username])
+        cursor.execute("select * from get_rating(%s)", [username])
         users = cursor.fetchone()
     result_dict = {'user': users}
 
@@ -523,34 +523,43 @@ def orders(request,username):
     
     result_dict = {'currentuser': username}
     
-    # Seller pending transactions
+    # Seller pending transactions sales
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM pending_transactions WHERE seller_username = %s and stat = 'Pending'",[username])
         posts = cursor.fetchall()
         if request.POST:            
-            if request.POST['action'] == 'Accept':
+            if request.POST.get('action') and request.POST['action'] == 'Accept':
                 with connection.cursor() as cursor:
                     cursor.execute("UPDATE posts SET status = 'NOT AVAILABLE' WHERE post_id = %s", [request.POST['post_id']])
                     cursor.execute("UPDATE transactions SET stat = 'COMPLETED' WHERE post_id = %s", [request.POST['post_id']])
                 return redirect('orders',username)
     result_dict['my_sales'] = posts
 
-    # Buyer pending transactions
+    # Buyer pending transactions purchases
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s and stat = 'Pending'",[username])
         posts = cursor.fetchall()
         if request.POST:
-            if request.POST['action'] == 'Cancel':
+            if request.POST.get('action') and request.POST['action'] == 'Cancel':
                 with connection.cursor() as cursor:
                     cursor.execute("DELETE FROM transactions WHERE post_id = %s", [request.POST['post_id']])
                     cursor.execute("UPDATE posts SET status = 'AVAILABLE' WHERE post_id = %s",[request.POST['post_id']])
                 return redirect('orders', username)
     result_dict['my_orders'] = posts
 
-    # Completed transactions
+    # Completed sales 
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM pending_transactions WHERE (buyer_username = %s or seller_username = %s) and stat='COMPLETED'",[username,username])
+        cursor.execute("SELECT * FROM pending_transactions WHERE seller_username = %s and stat='COMPLETED'",[username])
         posts = cursor.fetchall()
-    result_dict['completed'] = posts
-   
+    result_dict['completed_sales'] = posts
+
+    # Completed purchases
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s and stat='COMPLETED'",[username])
+        posts = cursor.fetchall()
+    result_dict['completed_purchase'] = posts
+
+    query_ratings = request.POST.get("ratings")
+    print(query_ratings)
+    
     return render(request,'app/orders.html',result_dict)
