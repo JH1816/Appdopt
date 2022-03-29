@@ -32,6 +32,7 @@ CREATE TABLE transactions(
 	seller_username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
 	buyer_username VARCHAR(16) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
 	stat VARCHAR(16) DEFAULT 'Pending',
+	ratings INTEGER DEFAULT NULL,
 	PRIMARY KEY (post_id, seller_username, buyer_username),
 	FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
