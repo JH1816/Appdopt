@@ -63,6 +63,7 @@
             <th>Seller</th>
             <th>Buyer</th>
             <th>Date of Sale</th>
+            <th>Status</th>
             
         </thead>
         {% for transactions in history %}
@@ -71,6 +72,7 @@
             <td> {{ transactions.2 }} </td>
             <td> {{ transactions.3 }} </td>
             <td> {{ transactions.1 }} </td>
+            <td> {{ transactions.4 }} </td>
             <td>
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}
