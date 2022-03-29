@@ -522,26 +522,34 @@ def orders(request,username):
     
     result_dict = {'currentuser': username}
     
+    # Seller pending transactions
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM pending_transactions WHERE seller_username = %s",[username])
+        cursor.execute("SELECT * FROM pending_transactions WHERE seller_username = %s and stat = 'Pending'",[username])
         posts = cursor.fetchall()
         if request.POST:            
             if request.POST['action'] == 'Accept':
                 with connection.cursor() as cursor:
-                    cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
+                    cursor.execute("UPDATE posts SET status = 'SOLD' WHERE post_id = %s", [request.POST['post_id']])
+                    cursor.execute("UPDATE transactions SET stat = 'COMPLETED' WHERE post_id = %s", [request.POST['post_id']])
                 return redirect('orders',username)
     result_dict['my_sales'] = posts
 
+    # Buyer pending transactions
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s",[username])
+        cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s and stat = 'Pending'",[username])
         posts = cursor.fetchall()
-        print(posts)
         if request.POST:
             if request.POST['action'] == 'Cancel':
                 with connection.cursor() as cursor:
                     cursor.execute("DELETE FROM transactions WHERE post_id = %s", [request.POST['post_id']])
                     cursor.execute("UPDATE posts SET status = 'AVAILABLE' WHERE post_id = %s",[request.POST['post_id']])
                 return redirect('orders', username)
-
     result_dict['my_orders'] = posts
+
+    # Completed transactions
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM pending_transactions WHERE (buyer_username = %s or seller_username = %s) and stat='COMPLETED'",[username,username])
+        posts = cursor.fetchall()
+    result_dict['completed'] = posts
+   
     return render(request,'app/orders.html',result_dict)
