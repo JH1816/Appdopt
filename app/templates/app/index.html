@@ -82,5 +82,21 @@
         </tr>
        {% endfor %}
     </table>
+    <table border=1 style="float: left">
+        <thead>
+            <th>Username</th>
+            <th>Total Number of Ratings</th>
+            <th>Number of People Who Rated</th>
+            
+            
+        </thead>
+        {% for ratings in ratingList %}
+        <tr>
+            <td> {{ ratings.0 }} </td>
+            <td> {{ ratings.1 }} </td>
+            <td> {{ ratings.2 }} </td>
+        </tr>
+       {% endfor %}
+    </table>
 </body>
 </html>

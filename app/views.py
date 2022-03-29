@@ -74,7 +74,8 @@ def register(request):
             try: 
                 ## Inserts into PostgreSQL database
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
-            
+                cursor.execute("INSERT INTO ratings VALUES (%s)", [username])
+
             except Exception as e:
 
                 string = str(e)
@@ -170,6 +171,7 @@ def index(request):
                 cursor.execute("DELETE FROM transactions WHERE seller_username = %s OR buyer_username = %s", [username, username])
                 cursor.execute("DELETE FROM posts WHERE username = %s", [username])
                 cursor.execute("DELETE FROM users WHERE username = %s", [username])
+                cursor.execute("DELETE FROM ratings WHERE username = %s", [username])
 
     ## Delete post            
     if request.POST:
@@ -202,7 +204,11 @@ def index(request):
         cursor.execute("SELECT * FROM transactions ORDER BY date_of_sale")
         transactions = cursor.fetchall()
 
-    return render(request,'app/index.html',{'records': users, 'listing': posts, 'history': transactions})
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM ratings ORDER BY counts")
+        ratings = cursor.fetchall()
+
+    return render(request,'app/index.html',{'records': users, 'listing': posts, 'history': transactions, 'ratingList': ratings})
 
 # Adding users for Admin page
 def addUser(request):
@@ -220,7 +226,8 @@ def addUser(request):
             try: 
                 ## Inserts into PostgreSQL database
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
-            
+                cursor.execute("INSERT INTO ratings VALUES (%s)", [username])
+
             except Exception as e:
 
                 string = str(e)
