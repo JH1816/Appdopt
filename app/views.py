@@ -530,7 +530,7 @@ def orders(request,username):
         if request.POST:            
             if request.POST['action'] == 'Accept':
                 with connection.cursor() as cursor:
-                    cursor.execute("UPDATE posts SET status = 'SOLD' WHERE post_id = %s", [request.POST['post_id']])
+                    cursor.execute("UPDATE posts SET status = 'NOT AVAILABLE' WHERE post_id = %s", [request.POST['post_id']])
                     cursor.execute("UPDATE transactions SET stat = 'COMPLETED' WHERE post_id = %s", [request.POST['post_id']])
                 return redirect('orders',username)
     result_dict['my_sales'] = posts
