@@ -134,7 +134,6 @@ def home(request, username):
     else:
         query_age = "and cast(age_of_pet as int) >=10"
 
-    print(request.GET)
     if request.GET:
         with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM posts WHERE (LOWER(description) LIKE LOWER('%%" + query_search + "%%') OR LOWER(location) LIKE LOWER('%%" + query_search + "%%') OR LOWER(username) LIKE LOWER('%%" + query_search + "%%') OR LOWER(title) LIKE LOWER('%%" + query_search + "%%'))" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
@@ -521,6 +520,8 @@ def average(request,username):
 @login_required(login_url = 'login')
 def orders(request,username):
     
+    result_dict = {'currentuser': username}
+    
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM pending_transactions WHERE seller_username = %s",[username])
         posts = cursor.fetchall()
@@ -529,10 +530,12 @@ def orders(request,username):
                 with connection.cursor() as cursor:
                     cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
                 return redirect('orders',username)
+    result_dict['my_sales'] = posts
 
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s",[username])
         posts = cursor.fetchall()
+        print(posts)
         if request.POST:
             if request.POST['action'] == 'Cancel':
                 with connection.cursor() as cursor:
@@ -540,6 +543,5 @@ def orders(request,username):
                     cursor.execute("UPDATE posts SET status = 'AVAILABLE' WHERE post_id = %s",[request.POST['post_id']])
                 return redirect('orders', username)
 
-    result_dict = {'currentuser': username}
-    result_dict['records'] = posts
+    result_dict['my_orders'] = posts
     return render(request,'app/orders.html',result_dict)

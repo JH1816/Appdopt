@@ -1,15 +1,12 @@
 {% extends "app/base.html" %} {% block content %}
 <main role="main" class="container">
     <div class="row">
-      <div class="col-md-8">
-          {% if messages%}
-              {% for message in messages %}
-                  <div class="alert alert-{{ message.tags }}">
-                      {{ message }}
-                  </div>
-              {% endfor %}
-          {% endif %}
-        {% for post in records %}
+        <div class="col-md-8">
+            {% if messages%} {% for message in messages %}
+            <div style="color:red;" class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %} {% endif %} {% for post in records %}
             <article class="media content-section">
                 <div class="media-body">
                     <div class="article-metadata">
@@ -20,26 +17,26 @@
                     <p class="article-content">{{ post.7 }}</p>
                 </div>
             </article>
-        {% endfor %} 
-      </div>
-      <div class="col-md-4">
-        <div class="content-section">
-          <h3>Welcome {{ currentuser }}</h3>
-          <p class='text-muted'>Appdopt, a place to find your ideal pet
-            <ul class="list-group">
-              <form method="GET">
-                  <label for="psearch"> Search Posts: </label>
-                    <input type="search" id="psearch" name="psearch" placeholder="Search">
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3>Welcome {{ currentuser }}</h3>
+                <p class='text-muted'>Appdopt, a place to find your ideal pet
+                    <ul class="list-group">
+                        <form method="GET">
+                            <label for="psearch"> Search Posts: </label>
+                            <input type="search" id="psearch" name="psearch" placeholder="Search">
 
-                      <li class="list-group" style = "margin-top:10px">
-                        <select id="price" class="form-control" name="price">
+                            <li class="list-group" style="margin-top:10px">
+                                <select id="price" class="form-control" name="price">
                           <option selected="selected" value="ASC" >Price</option>
                           <option value="DESC"> Decreasing </option>
                           <option value="ASC"> Increasing </option>
                         </select>
-                      </li>
-                      <li class="list-group" style = "margin-top:10px">
-                        <select id="age_range" class="form-control" name="age_range">
+                            </li>
+                            <li class="list-group" style="margin-top:10px">
+                                <select id="age_range" class="form-control" name="age_range">
                           <option selected="selected" value="" >Age range</option>
                           <option value="less than 1"> &le; 1 Year </option>
                           <option value="1 to 3"> 1 Year - 3 Years </option>
@@ -47,20 +44,20 @@
                           <option value="6 to 10"> 6 Year - 10 Years </option>
                           <option value="more than 10"> &ge; 10 Years </option>
                         </select>
-                      </li>
-                      <li class="list-group" style = "margin-top:10px">
-                        <select id="gender" class="form-control" name="gender">
+                            </li>
+                            <li class="list-group" style="margin-top:10px">
+                                <select id="gender" class="form-control" name="gender">
                           <option selected="selected" value="" >Gender</option>
                           <option value="Female"> Female </option>
                           <option value="Male"> Male </option>
                         </select>
-                      </li>
-                    <button style = "margin-top:15px" type="submit" class="btn btn-outline-info">Search</button>
-              </form>
-            </ul>
-          </p>
+                            </li>
+                            <button style="margin-top:15px" type="submit" class="btn btn-outline-info">Search</button>
+                        </form>
+                    </ul>
+                </p>
+            </div>
         </div>
-      </div>
     </div>
-  </main>
+</main>
 {% endblock content %}
