@@ -134,7 +134,6 @@ def home(request, username):
     else:
         query_age = "and cast(age_of_pet as int) >=10"
 
-    print(request.GET)
     if request.GET:
         with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM posts WHERE (LOWER(description) LIKE LOWER('%%" + query_search + "%%') OR LOWER(location) LIKE LOWER('%%" + query_search + "%%') OR LOWER(username) LIKE LOWER('%%" + query_search + "%%') OR LOWER(title) LIKE LOWER('%%" + query_search + "%%'))" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
@@ -382,7 +381,7 @@ def view(request, id,username):
                     if post[9] == 'AVAILABLE' and post[1] != username:
                         cursor.execute("UPDATE posts SET status = 'NOT AVAILABLE' WHERE post_id = %s", [id])
                         cursor.execute("INSERT INTO  transactions VALUES (%s ,now(),%s,%s)",[ id,request.POST['seller'][:-1],username])
-                        messages.success(request, "An order has been submitted. Please check 'My Purchases' to contact the seller.")
+                        messages.success(request, "An order has been submitted. Please check 'My Orders' to contact the seller.")
                         return redirect('home', username = request.user.username)
                     else:
                         messages.error(request, "You cannot buy your own pet")
@@ -517,3 +516,32 @@ def average(request,username):
     result_dict['breeds'] = breeds
 
     return render(request,'app/average.html',result_dict)
+
+@login_required(login_url = 'login')
+def orders(request,username):
+    
+    result_dict = {'currentuser': username}
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM pending_transactions WHERE seller_username = %s",[username])
+        posts = cursor.fetchall()
+        if request.POST:            
+            if request.POST['action'] == 'Accept':
+                with connection.cursor() as cursor:
+                    cursor.execute("DELETE FROM posts WHERE post_id = %s", [request.POST['post_id']])
+                return redirect('orders',username)
+    result_dict['my_sales'] = posts
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s",[username])
+        posts = cursor.fetchall()
+        print(posts)
+        if request.POST:
+            if request.POST['action'] == 'Cancel':
+                with connection.cursor() as cursor:
+                    cursor.execute("DELETE FROM transactions WHERE post_id = %s", [request.POST['post_id']])
+                    cursor.execute("UPDATE posts SET status = 'AVAILABLE' WHERE post_id = %s",[request.POST['post_id']])
+                return redirect('orders', username)
+
+    result_dict['my_orders'] = posts
+    return render(request,'app/orders.html',result_dict)
