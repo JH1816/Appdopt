@@ -74,7 +74,6 @@ def register(request):
             try: 
                 ## Inserts into PostgreSQL database
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
-                cursor.execute("INSERT INTO ratings VALUES (%s)", [username])
 
             except Exception as e:
 
@@ -104,6 +103,8 @@ def register(request):
             ## Registers into the ORM
             user = User.objects.create_user(username = username, password = password)
             user.save()
+
+            
 
             messages.success(request, 'Account successfully created!')
 
@@ -205,7 +206,7 @@ def index(request):
         transactions = cursor.fetchall()
 
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM ratings ORDER BY counts")
+        cursor.execute("SELECT * FROM ratings ORDER BY counts DESC")
         ratings = cursor.fetchall()
 
     return render(request,'app/index.html',{'records': users, 'listing': posts, 'history': transactions, 'ratingList': ratings})
@@ -226,7 +227,6 @@ def addUser(request):
             try: 
                 ## Inserts into PostgreSQL database
                 cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s, %s)", [first_name, last_name, email, username, phone_number, password])
-                cursor.execute("INSERT INTO ratings VALUES (%s)", [username])
 
             except Exception as e:
 
