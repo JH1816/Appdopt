@@ -27,3 +27,18 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION rate_transaction()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL
+AS
+$$
+BEGIN
+  IF NEW.ratings <> OLD.ratings THEN
+	UPDATE ratings
+	SET total_rating = total_rating + NEW.ratings, counts = counts + 1
+	WHERE username = NEW.seller_username;
+	END IF;
+  
+  RETURN NEW;
+END;
+$$;

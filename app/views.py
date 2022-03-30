@@ -570,6 +570,11 @@ def orders(request,username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM pending_transactions WHERE buyer_username = %s and stat='COMPLETED'",[username])
         posts = cursor.fetchall()
+        if request.POST:
+            rating = request.POST.get('ratings')
+            if request.POST.get('action') and request.POST['action'] == 'Rate':
+                with connection.cursor() as cursor:
+                    cursor.execute("UPDATE transactions SET ratings = %s WHERE (post_id = %s AND ratings = 0)", [rating, request.POST['post_id']])
     result_dict['completed_purchase'] = posts
 
     query_ratings = request.POST.get("ratings")
