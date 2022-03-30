@@ -21,9 +21,13 @@ For the distribution of the pets, dogs took up roughly 38.5% of total pets, cats
 For the breed of the animal, we can randomly assign one from the list of 10 dog breeds, 10 rabbit breeds, 10 cat breeds, 11 guinea pig breeds or 5 hamster breeds. 
 
 Dog breeds: https://goodyfeed.com/top-10-dog-breeds-see-spore/
+
 Rabbit breeds: https://www.dflufflounge.com/post/introductory-to-pet-rabbits-in-singapore
+
 Cat breeds: https://blog.kohepets.com.sg/10-popular-cat-breeds-singapore/ 
+
 Guinea Pig breeds: https://blog.petloverscentre.com/guinea-pig-breeds/ 
+
 Hamster breeds: https://www.hamstersociety.sg/faq#:~:text=The%20common%20species%20that%20can,Hamsters%2C%20Campbells%20and%20Roborovski%20Hamsters.
 
 
