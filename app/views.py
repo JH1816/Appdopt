@@ -380,6 +380,11 @@ def view(request, id,username):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM posts WHERE post_id = %s", [id])
         post = cursor.fetchone()
+        postAuthor = post[1]
+        cursor.execute("SELECT rating FROM users WHERE username = %s", [postAuthor])
+        rating = cursor.fetchone()
+
+
     if request.POST:
         if request.POST['action'] == 'BUY':
             with connection.cursor() as cursor:
@@ -396,6 +401,7 @@ def view(request, id,username):
 
     result_dict = {'cust': post}
     result_dict['currentuser']=username
+    result_dict['rating']=rating
 
     return render(request,'app/view.html',result_dict)
 
