@@ -1,4 +1,4 @@
-insert into users (first_name, last_name, email, username, phone_number, password, type) values ('Song Heng', 'Er', 'admin@admin.com', 'songheng', '98765432', 'songheng', 'admin');
+insert into users (first_name, last_name, email, username, phone_number, password, type) values ('Song Heng', 'Er', 'admin@admin.com', 'songheng', 98765432, 'songheng', 'admin');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Hilario', 'Hallihan', 'hhallihan0@gizmodo.com', 'hhallihan0', 95687989, 'AIF2zOm');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Barrett', 'Aldwinckle', 'baldwinckle1@exblog.jp', 'baldwinckle1', 91679051, '2faTJa');
 insert into users (first_name, last_name, email, username, phone_number, password) values ('Willie', 'Tapner', 'wtapner2@fastcompany.com', 'wtapner2', 84754102, 'MFVDRoc6zaE3');
