@@ -118,27 +118,34 @@ def register(request):
 def home(request, username):    
     query_search = request.GET.get("psearch")
     query_price = request.GET.get("price")
+    query_rating = request.GET.get("ratings","")
+
     if not request.GET.get("gender"):
             query_gender = ""
     else:
-        query_gender = "and gender = '"+request.GET.get("gender")+"'"
+        query_gender = "and p.gender = '"+request.GET.get("gender")+"'"
 
     if not request.GET.get("age_range"):
         query_age = ""
     elif request.GET.get("age_range") == "less than 1":
-        query_age = "and cast(age_of_pet as int) <1"
+        query_age = "and cast(p.age_of_pet as int) <1"
     elif request.GET.get("age_range") == "1 to 3":
-        query_age = "and cast(age_of_pet as int) <3 and cast(age_of_pet as int) >=1"
+        query_age = "and cast(p.age_of_pet as int) <3 and cast(p.age_of_pet as int) >=1"
     elif request.GET.get("age_range") == "3 to 6":
-        query_age = "and cast(age_of_pet as int) <6 and cast(age_of_pet as int) >=3"
+        query_age = "and cast(p.age_of_pet as int) <6 and cast(p.age_of_pet as int) >=3"
     elif request.GET.get("age_range") == "6 to 10":
-        query_age = "and cast(age_of_pet as int) <10 and cast(age_of_pet as int) >=6"
+        query_age = "and cast(p.age_of_pet as int) <10 and cast(p.age_of_pet as int) >=6"
     else:
         query_age = "and cast(age_of_pet as int) >=10"
 
+    if not query_price: #empty price, order by rating, then price
+        query_orderby = "u.rating " + query_rating + ", p.price" 
+    else: #price is empty, order by price, then rating
+        query_orderby = "p.price " + query_price + ", u.rating" 
+
     if request.GET:
         with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM posts WHERE (LOWER(description) LIKE LOWER('%%" + query_search + "%%') OR LOWER(location) LIKE LOWER('%%" + query_search + "%%') OR LOWER(username) LIKE LOWER('%%" + query_search + "%%') OR LOWER(title) LIKE LOWER('%%" + query_search + "%%'))" + query_gender + query_age+" ORDER BY PRICE "+ query_price,[query_gender])
+                cursor.execute("SELECT * FROM posts p inner join users u on p.username = u.username WHERE (LOWER(p.description) LIKE LOWER('%%" + query_search + "%%') OR LOWER(p.location) LIKE LOWER('%%" + query_search + "%%') OR LOWER(p.username) LIKE LOWER('%%" + query_search + "%%') OR LOWER(p.title) LIKE LOWER('%%" + query_search + "%%'))" + query_gender + query_age+ " and status = 'AVAILABLE' ORDER BY " + query_orderby)
                 posts = cursor.fetchall()
 
         result_dict = {'currentuser': username}
@@ -148,7 +155,7 @@ def home(request, username):
     ## Checks if logged in user is the same
     elif request.user.username == username:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM posts WHERE status='AVAILABLE' ORDER BY post_id")
+            cursor.execute("SELECT * FROM posts p inner join users u on p.username = u.username WHERE p.status='AVAILABLE' ORDER BY p.post_id")
             posts = cursor.fetchall()
         result_dict = {'currentuser': username}
         result_dict['records'] = posts

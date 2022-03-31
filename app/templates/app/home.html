@@ -12,6 +12,7 @@
                     <div class="article-metadata">
                         <a class="mr-2" href="{{currentuser}}/view/{{post.0}}">{{ post.0 }}</a>
                         <small class="text-muted">{{ post.4 }}</small>
+                        <small><b>Seller ratings {{ post.19 }}</b></small>
                     </div>
                     <h2><a class="article-title" href="{{currentuser}}/view/{{post.0}}">{{ post.8 }}</a></h2>
                     <p class="article-content">{{ post.7 }}</p>
@@ -28,13 +29,16 @@
                             <label for="psearch"> Search Posts: </label>
                             <input type="search" id="psearch" name="psearch" placeholder="Search">
 
+                            <!-- Price -->
                             <li class="list-group" style="margin-top:10px">
                                 <select id="price" class="form-control" name="price">
-                          <option selected="selected" value="ASC" >Price</option>
+                          <option selected="selected" value="" >Price</option>
                           <option value="DESC"> Decreasing </option>
                           <option value="ASC"> Increasing </option>
                         </select>
                             </li>
+
+                            <!-- Age range -->
                             <li class="list-group" style="margin-top:10px">
                                 <select id="age_range" class="form-control" name="age_range">
                           <option selected="selected" value="" >Age range</option>
@@ -45,6 +49,8 @@
                           <option value="more than 10"> &ge; 10 Years </option>
                         </select>
                             </li>
+
+                            <!-- Gender -->
                             <li class="list-group" style="margin-top:10px">
                                 <select id="gender" class="form-control" name="gender">
                           <option selected="selected" value="" >Gender</option>
@@ -52,6 +58,16 @@
                           <option value="Male"> Male </option>
                         </select>
                             </li>
+
+                            <!-- Ratings -->
+                            <li class="list-group" style="margin-top:10px">
+                                <select id="ratings" class="form-control" name="ratings">
+                          <option selected="selected" value="" > Seller rating</option>
+                          <option value="DESC"> Decreasing </option>
+                          <option value="ASC"> Increasing </option>
+                        </select>
+                            </li>
+
                             <button style="margin-top:15px" type="submit" class="btn btn-outline-info">Search</button>
                         </form>
                     </ul>
