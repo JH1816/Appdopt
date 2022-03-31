@@ -1,4 +1,5 @@
-{% extends "app/base.html" %} {% block content %}
+{% extends "app/base.html" %} {% block content %}{% load static %}
+
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8">
@@ -19,6 +20,17 @@
                     </div>
                     <h2 class="Title">{{ cust.8 }}</h2>
                     <p class="article-content">
+                    {% if cust.2 == 'Dog'%} 
+                    <img src="{% static 'app/images/dog.jpeg' %}" width="20%"   alt="Dog"/>
+                    {% elif cust.2 == 'Rabbit'%} 
+                    <img src="{% static 'app/images/rabbit.jpeg' %}" width="20%"   alt="rabbit"/>
+                    {% elif cust.2 == 'Cat'%} 
+                    <img src="{% static 'app/images/cat.jpeg' %}" width="20%"   alt="cat"/>
+                    {% elif cust.2 == 'Hamster'%} 
+                    <img src="{% static 'app/images/hamster.jpeg' %}" width="20%"   alt="cat"/>
+                    {% elif cust.2 == 'Guinea Pig'%} 
+                    <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%"   alt="cat"/>
+                    {% endif %}
                         Pet: {{ cust.2 }} 
                         Breed: {{ cust.3 }} 
                         Age: {{ cust.5 }} 
