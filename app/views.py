@@ -461,8 +461,6 @@ def profile(request, username):
     result_dict = {'currentuser': username}
     result_dict['records'] = posts
     result_dict['users'] = users
-
-    status = ''
     
 
     if request.POST:
@@ -472,14 +470,50 @@ def profile(request, username):
             cursor.execute("SELECT " + current_action + " FROM users WHERE username = %s ", [username])
             user = cursor.fetchone() 
 
-            if user != None and user[0] == request.POST['old_'+ current_action] and request.POST['old_'+ current_action] != request.POST['new_'+ current_action]:
-                cursor.execute("UPDATE users SET " + current_action + " = %s WHERE username = %s", [ request.POST['new_'+ current_action], username])
-                status =  current_action + ' has been succesfully updated'
-            else:
-                status = current_action + 'of profile with username %s failed to change %s' % (username, current_action)
+            old = request.POST.get('old_' + current_action)
+            new = request.POST.get('new_' + current_action)
 
-            
-            result_dict[current_action + '_status'] = status
+            if user != None and str(user[0]) == old and old != new:
+                
+                try:
+                    cursor.execute("UPDATE users SET " + current_action + " = %s WHERE username = %s", [ new, username])
+                
+                except Exception as e:
+
+                    string = str(e)
+
+                    ## Checks for uniqueness of email
+                    if 'duplicate key value violates unique constraint "users_email_key"' in string:  
+                        messages.error(request, "This email has been taken. Try again.")
+
+                    ## Checks for uniqueness of username
+                    elif 'duplicate key value violates unique constraint "users_pkey"' in string:
+                        messages.error(request, 'Username has been taken. Try again.')
+
+                    ## Checks for structure of email
+                    elif 'new row for relation "users" violates check constraint "users_email_check"' in string:
+                        messages.error(request, 'Invalid email. Try again.')
+
+                    ## Checks for uniqueness of phone number
+                    elif 'duplicate key value violates unique constraint "users_phone_number_key"' in string:
+                        messages.error(request, 'This phone number exists. Try again.')
+
+                    elif 'new row for relation "users" violates check constraint "users_phone_number_check"' in string:
+                        messages.error(request, 'Invalid phone number. Try again.')
+                    
+                    return render(request, 'app/profile.html', result_dict)
+
+                if current_action == 'password':
+                    u = User.objects.get(username=username)
+                    u.set_password(new)
+                    u.save()
+
+                messages.success(request, 'Account successfully updated')
+                return render(request,'app/profile.html',result_dict)
+            else:
+                messages.error(request, f'Wrong old {current_action} or old {current_action} is the same as new {current_action}!')
+    
+
     return render(request,'app/profile.html',result_dict)
 
 @login_required(login_url = 'login')
