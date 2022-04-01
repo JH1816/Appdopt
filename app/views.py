@@ -155,7 +155,7 @@ def home(request, username):
     ## Checks if logged in user is the same
     elif request.user.username == username:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM posts p inner join users u on p.username = u.username WHERE p.status='AVAILABLE' ORDER BY p.post_id")
+            cursor.execute("SELECT * FROM posts p inner join users u on p.username = u.username WHERE p.status='AVAILABLE' ORDER BY p.date_of_post DESC")
             posts = cursor.fetchall()
         result_dict = {'currentuser': username}
         result_dict['records'] = posts
