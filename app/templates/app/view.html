@@ -11,7 +11,7 @@
             <article class="media content-section">
                 <div class="media-body">
                     <div class="article-metadata">
-                        <a class="mr-2" href="#">{{ cust.1 }}</a> Rating:{{ rating.0 }}
+                        <a class="mr-2" href="#">{{ cust.1 }}</a>Seller Ratings:{{ rating.0 }}
                         <small class="text-muted"> {{ cust.4|date:"F d, Y" }}</small> {% if cust.1 == currentuser %}
                         <div>
                             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userpostEdit' post_id=cust.0 username=cust.1%}">Edit post</a>
