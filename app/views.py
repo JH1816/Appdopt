@@ -155,7 +155,7 @@ def home(request, username):
     ## Checks if logged in user is the same
     elif request.user.username == username:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM posts p inner join users u on p.username = u.username WHERE p.status='AVAILABLE' ORDER BY p.post_id")
+            cursor.execute("SELECT * FROM posts p inner join users u on p.username = u.username WHERE p.status='AVAILABLE' ORDER BY p.date_of_post DESC")
             posts = cursor.fetchall()
         result_dict = {'currentuser': username}
         result_dict['records'] = posts
@@ -167,6 +167,7 @@ def home(request, username):
    
 
 # Admin index page
+@login_required(login_url = 'login')
 def index(request):
 
     ## Delete all transactions, all posts as well as the user
@@ -219,6 +220,7 @@ def index(request):
     return render(request,'app/index.html',{'records': users, 'listing': posts, 'history': transactions, 'ratingList': ratings})
 
 # Adding users for Admin page
+@login_required(login_url = 'login')
 def addUser(request):
 
     if request.POST:
@@ -267,6 +269,7 @@ def addUser(request):
     return render(request, 'app/add.html')
 
 # Viewing users for Admin page
+@login_required(login_url = 'login')
 def adminView(request, username):
     
     ## Selects that specific user
@@ -278,6 +281,7 @@ def adminView(request, username):
     return render(request,'app/adminView.html',result_dict)
 
 # Editing users for Admin page
+@login_required(login_url = 'login')
 def edit(request, username):
     """Shows the main page"""
 
@@ -342,6 +346,7 @@ def edit(request, username):
 
 
 # View posts on admin page
+@login_required(login_url = 'login')
 def postView(request, post_id):
     
     with connection.cursor() as cursor:
@@ -352,6 +357,7 @@ def postView(request, post_id):
     return render(request,'app/postView.html',result_dict)
 
 # Edit posts on admin page
+@login_required(login_url = 'login')
 def postEdit(request, post_id):
     
     context ={}
