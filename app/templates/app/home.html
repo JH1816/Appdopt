@@ -12,22 +12,16 @@
                     <div class="article-metadata">
                         <a class="mr-2" href="{{currentuser}}/view/{{post.0}}">{{ post.0 }}</a>
                         <small class="text-muted">{{ post.4 }}</small>
-                        <small><b>Seller ratings {{ post.19 }}</b></small>
+                        <small><b>Seller ratings: {{ post.19 }}/5</b></small>
                     </div>
                     <h2><a class="article-title" href="{{currentuser}}/view/{{post.0}}">{{ post.8 }}</a></h2>
                     <p class="article-content">
-                        {% if post.2 == 'Dog'%} 
-                        <img src="{% static 'app/images/dog.jpeg' %}" width="20%"   alt="Dog"/>
-                        {% elif post.2 == 'Rabbit'%} 
-                        <img src="{% static 'app/images/rabbit.jpeg' %}" width="20%"   alt="rabbit"/>
-                        {% elif post.2 == 'Cat'%} 
-                        <img src="{% static 'app/images/cat.jpeg' %}" width="20%"   alt="cat"/>
-                        {% elif post.2 == 'Hamster'%} 
-                        <img src="{% static 'app/images/hamster.JPG' %}" width="20%"   alt="hamster"/>
-                        {% elif post.2 == 'Guinea Pig'%} 
-                        <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%"   alt="GuineaPig"/>
-                        {% endif %}
-                        {{ post.7 }}
+                        {% if post.2 == 'Dog'%}
+                        <img src="{% static 'app/images/dog.jpeg' %}" width="20%" alt="Dog" /> {% elif post.2 == 'Rabbit'%}
+                        <img src="{% static 'app/images/rabbit.jpeg' %}" width="20%" alt="rabbit" /> {% elif post.2 == 'Cat'%}
+                        <img src="{% static 'app/images/cat.jpeg' %}" width="20%" alt="cat" /> {% elif post.2 == 'Hamster'%}
+                        <img src="{% static 'app/images/hamster.JPG' %}" width="20%" alt="hamster" /> {% elif post.2 == 'Guinea Pig'%}
+                        <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%" alt="GuineaPig" /> {% endif %} {{ post.7 }}
                     </p>
                 </div>
             </article>

@@ -11,8 +11,8 @@
             <article class="media content-section">
                 <div class="media-body">
                     <div class="article-metadata">
-                        <a class="mr-2" href="#">{{ cust.1 }} Rating:{{ rating.0 }} </a>
-                        <small class="text-muted">{{ cust.4|date:"F d, Y" }}</small> {% if cust.1 == currentuser %}
+                        <a class="mr-2" href="#">{{ cust.1 }}</a> Rating:{{ rating.0 }}
+                        <small class="text-muted"> {{ cust.4|date:"F d, Y" }}</small> {% if cust.1 == currentuser %}
                         <div>
                             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userpostEdit' post_id=cust.0 username=cust.1%}">Edit post</a>
                         </div>
@@ -20,25 +20,13 @@
                     </div>
                     <h2 class="Title">{{ cust.8 }}</h2>
                     <p class="article-content">
-                    {% if cust.2 == 'Dog'%} 
-                    <img src="{% static 'app/images/dog.jpeg' %}" width="20%"   alt="Dog"/>
-                    {% elif cust.2 == 'Rabbit'%} 
-                    <img src="{% static 'app/images/rabbit.jpeg' %}" width="20%"   alt="rabbit"/>
-                    {% elif cust.2 == 'Cat'%} 
-                    <img src="{% static 'app/images/cat.jpeg' %}" width="20%"   alt="cat"/>
-                    {% elif cust.2 == 'Hamster'%} 
-                    <img src="{% static 'app/images/hamster.JPG' %}" width="20%"   alt="hamster"/>
-                    {% elif cust.2 == 'Guinea Pig'%} 
-                    <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%"   alt="cat"/>
-                    {% endif %}
-                        Pet: {{ cust.2 }} 
-                        Breed: {{ cust.3 }} 
-                        Age: {{ cust.5 }} 
-                        Price: {{ cust.6 }} 
-                        Gender: {{ cust.10 }} 
-                        Description: {{ cust.7 }} 
-                        Location: {{ cust.11 }} 
-                        Status: {{ cust.9 }}
+                        {% if cust.2 == 'Dog'%}
+                        <img src="{% static 'app/images/dog.jpeg' %}" width="20%" alt="Dog" /> {% elif cust.2 == 'Rabbit'%}
+                        <img src="{% static 'app/images/rabbit.jpeg' %}" width="20%" alt="rabbit" /> {% elif cust.2 == 'Cat'%}
+                        <img src="{% static 'app/images/cat.jpeg' %}" width="20%" alt="cat" /> {% elif cust.2 == 'Hamster'%}
+                        <img src="{% static 'app/images/hamster.JPG' %}" width="20%" alt="hamster" /> {% elif cust.2 == 'Guinea Pig'%}
+                        <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%" alt="cat" /> {% endif %} Pet: {{ cust.2 }} Breed: {{ cust.3 }} Age: {{ cust.5 }} Price: {{ cust.6 }} Gender: {{ cust.10 }} Description: {{ cust.7 }} Location: {{ cust.11
+                        }} Status: {{ cust.9 }}
                     </p>
                     <form method="POST" style="display: inline;">
                         {% csrf_token %}
