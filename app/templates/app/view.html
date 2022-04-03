@@ -25,8 +25,15 @@
                         <img src="{% static 'app/images/rabbit.jpeg' %}" width="20%" alt="rabbit" /> {% elif cust.2 == 'Cat'%}
                         <img src="{% static 'app/images/cat.jpeg' %}" width="20%" alt="cat" /> {% elif cust.2 == 'Hamster'%}
                         <img src="{% static 'app/images/hamster.JPG' %}" width="20%" alt="hamster" /> {% elif cust.2 == 'Guinea Pig'%}
-                        <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%" alt="cat" /> {% endif %} Pet: {{ cust.2 }} Breed: {{ cust.3 }} Age: {{ cust.5 }} Price: {{ cust.6 }} Gender: {{ cust.10 }} Description: {{ cust.7 }} Location: {{ cust.11
-                        }} Status: {{ cust.9 }}
+                        <img src="{% static 'app/images/GuineaPig.jpeg' %}" width="20%" alt="cat" /> {% endif %} 
+                        Pet: {{ cust.2 }} 
+                        Breed: {{ cust.3 }} 
+                        Age: {{ cust.5 }} 
+                        Price: {{ cust.6 }} 
+                        Gender: {{ cust.10 }} 
+                        Description: {{ cust.7 }} 
+                        Location: {{ cust.11}} 
+                        Status: {{ cust.9 }}
                     </p>
                     <form method="POST" style="display: inline;">
                         {% csrf_token %}
